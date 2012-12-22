@@ -26,8 +26,6 @@ module FmTimbradoCfdi
       text_to_cfdi = Base64::encode64( documento )
       # Realizamos la peticion
       configurar_cliente
-      #
-      #
       response = @client.request "ns1:requestTimbrarCFDI" do
         soap.namespace = @namespace
         soap.body = { "param0" => {

@@ -38,10 +38,4 @@ module FmTimbradoCfdi
   def cancela_cfdi (uuid)
   end
 
-  def nuevo_cliente
-    Cliente.new
-  end
-
-  #:private_method nuevo_cliente
-
 end
