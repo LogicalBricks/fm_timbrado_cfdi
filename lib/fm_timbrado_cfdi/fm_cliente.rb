@@ -1,4 +1,5 @@
 require 'savon'
+require 'fm_timbrado_cfdi/fm_respuesta'
 
 module FmTimbradoCfdi
   class FmCliente
@@ -37,14 +38,14 @@ module FmTimbradoCfdi
           "generarCBB" => generar_cbb
         } }
       end # response
-      respuesta = Nokogiri::XML(response.to_xml).to_s
+      FmRespuesta.new(response)
     end #peticion timbrar
 
     private
     def configurar_cliente
       # Configuración de Savon
       Savon.configure do |config|
-        config.raise_errors = true
+        config.raise_errors = false 
         config.log_level = log_level 
         config.log = log 
       end

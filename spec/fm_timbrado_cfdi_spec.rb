@@ -19,10 +19,10 @@ describe FmTimbradoCfdi do
         cliente.log = false 
       end
 
-      fecha_comprobante = Time.now - 76*3600
+      fecha_comprobante = Time.now - 3600
       layout = File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', fecha_comprobante.strftime("%FT%T"))
       respuesta = FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout
-      puts respuesta 
+      puts respuesta.timbre
     end # it "debe timbrar correctamente ..."
   end #describe ".timbra_cfdi_layout"
 
