@@ -1,0 +1,110 @@
+[Encabezado]
+
+serie|AA
+fecha|--fecha-comprobante--
+folio|
+tipoDeComprobante|egreso
+formaDePago|PAGO EN UNA SOLA EXHIBICIÓN
+metodoDePago|Transferencía Electrónica
+condicionesDePago|Contado
+NumCtaPago|0098-HSBC
+subTotal|862068.97
+descuento|0.00
+total|735344.84
+Moneda|MXN
+noCertificado|
+LugarExpedicion|Nuevo León, México.
+
+[Datos Adicionales]
+
+tipoDocumento|Factura
+numeropedido|
+observaciones|Efectos Fiscales al Pago
+TransID|58921
+
+
+[Emisor]
+
+rfc|ESI920427886
+nombre|EMPRESA DE MUESTRA S.A de C.V.
+RegimenFiscal|REGIMEN GENERAL DE LEY
+
+[DomicilioFiscal]
+
+calle|Calle 
+noExterior|Número Ext.
+noInterior|Número Int.
+colonia|Colonia
+localidad|Localidad
+municipio|Municipio
+estado|NUEVO LEON
+pais|México
+codigoPostal|66260
+
+[ExpedidoEn]
+calle|Calle sucursal
+noExterior|
+noInterior|
+colonia|
+localidad|
+municipio|Nuevo León
+estado|Nuevo León
+pais|México
+codigoPostal|77000
+
+[Receptor]
+rfc|GHR090615KH8
+nombre|GOBIERNO DEL EDO DE OAXACA
+
+[Domicilio]
+calle|AVE BATALLON DE SAN PATRICIO
+noExterior|1000
+noInterior|1000
+colonia|RESIDENCIAL SAN AGUSTIN
+localidad|SAN PEDRO GARZA GARCIA
+municipio|
+estado|NUEVO LEON
+pais|MEXICO
+codigoPostal|66260
+
+[DatosAdicionales]
+
+noCliente|09871
+email|edgar.duran@facturacionmoderna.com
+
+
+[Concepto]
+
+cantidad|1
+unidad|No aplica
+noIdentificacion|
+descripcion|RECIBI DE LA TESORERIA MUNICIPAL DEL H. AYUNTAMIENTO DE SANTA MARIA OZOLOTEPEC, MIAHUATLAN, OAXACA, CON CARGO A LOS RECURSOS DEL RAMO GENERAL 33, ESPECIFICAMENTE DEL FONDO III.- FONDO PARA LA INFRAESTRUCTURA SOCIAL MUNICIPAL, EJERCICIO PRESUPUESTAL 2012, LA CANTIDAD DE $ 551,000.00 (QUINIENTOS CINCUENTA Y UN MIL PESOS 00/100 M.N.) POR CONCEPTO DEL PAGO DE LA ESTIMACION NUMERO UNO, RELATIVO A LA OBRA: CONSTRUCCION DEL SISTEMA DE AGUA POTABLE 2a. ETAPA, UBICADA EN LA LOCALIDAD DE SAN PABLO, MUNICIPIO DE SANTA MARIA OZOLOTEPEC, DISTRITO DE MIAHUATLAN, REGION DE LA SIERRA SUR, ESTADO DE OAXACA, SEGUN CONTRATO DE OBRA PUBLICA A PRECIOS UNITARIOS Y TIEMPO DETERMINADO No. MSM/AD/FISM/424-013/2012 DE FECHA: 01 DE MARZO DEL DOS MIL DOCE Y SEGUN OFICIO DE NOTIFICACION DE APROBACION Y AUTORIZACION DE OBRA NUM. R33/FISM/424/013/20012 DE FECHA: DIECINUEVE DE FEBRERO DEL DOS MIL DOCE, CORRESPONDIENTE A LA CUENTA AGUA POTABLE, TENIENDO UN PERIODO DE EJECUCION DE ACUERDO AL CONTRATO DEL 02 DE MARZO DEL 2012 AL 30 DE ABRIL DEL 2012, CON PERIODO DE EJECUCION DE LOS TRABAJOS DE LA PRESENTE ESTIMACION DEL 02 DE MARZO DEL 2012 AL 31 DE MARZO DEL 2012.
+valorUnitario|862068.97
+importe|862068.97
+
+
+
+[ImpuestoTrasladado]
+
+impuesto|IVA
+importe|137931.04
+tasa|16.00
+
+
+
+[RetencionLocal]
+ImpLocRetenido|Amortización de anticipo
+TasadeRetencion|30
+Importe|258620.69
+
+[RetencionLocal]
+ImpLocRetenido|Inspección y Vigilancia
+TasadeRetencion|0.5
+Importe|4310.34
+
+[RetencionLocal]
+ImpLocRetenido|Retención 2 al millar
+TasadeRetencion|0.2
+Importe|1724.14
+
+
