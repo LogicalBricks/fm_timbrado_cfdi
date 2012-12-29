@@ -26,6 +26,9 @@ describe FmTimbradoCfdi do
       layout = File.open('spec/fixtures/constructora_layout_example.txt').read.gsub('--fecha-comprobante--', fecha_comprobante.strftime("%FT%T"))
       respuesta = FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout
       respuesta.should be_valid
+      respuesta.xml_present?.should be_true
+      respuesta.pdf_present?.should be_true
+      respuesta.timbre_present?.should be_true
     end # it "debe timbrar correctamente ..."
 
     it "no debe timbrar el comprobante si tiene más de 72 horas de haber sido generado" do

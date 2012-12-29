@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'nokogiri'
 require 'savon'
 
@@ -69,5 +70,20 @@ module FmTimbradoCfdi
       not @error
     end
 
+    def xml_present?
+      not @xml.nil?
+    end
+
+    def cbb_present?
+      not @cbb.nil?
+    end
+
+    def pdf_present?
+      not @pdf.nil?
+    end
+
+    def timbre_present?
+      not @timbre.nil?
+    end
   end #class
 end #module
