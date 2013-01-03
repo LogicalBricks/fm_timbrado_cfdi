@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'nokogiri'
 require 'savon'
+require 'fm_timbrado_cfdi/fm_timbre'
 
 module FmTimbradoCfdi
   class FmRespuesta
@@ -28,7 +29,7 @@ module FmTimbradoCfdi
           end
           #Parseamos el nodo timbre
           if not @doc.xpath("//txt").empty? then
-            @timbre = Base64::decode64 @doc.xpath("//txt")[0].content
+            @timbre = FmTimbre.new Base64::decode64( @doc.xpath("//txt")[0].content ) 
           else
             @timbre = nil
             @error = true
