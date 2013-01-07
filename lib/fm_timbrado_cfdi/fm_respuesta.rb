@@ -5,7 +5,7 @@ require 'fm_timbrado_cfdi/fm_timbre'
 
 module FmTimbradoCfdi
   class FmRespuesta
-    attr_reader :errors, :pdf, :xml, :cbb, :timbre  
+    attr_reader :errors, :pdf, :xml, :cbb, :timbre, :no_csd_emisor 
     def initialize(savon_response)
       #inicializamos el estado del objeto
       parse(savon_response)
@@ -22,6 +22,15 @@ module FmTimbradoCfdi
           #Parseamos el nodo xml
           if not @doc.xpath("//xml").empty? then
             @xml = Base64::decode64 @doc.xpath("//xml")[0].content
+            # tratamos de obtener el no de serie del CSD del emisor
+            begin
+              factura_xml = Nokogiri::XML(@xml)
+              @no_csd_emisor = factura_xml.xpath("//cfdi:Comprobante").attribute('noCertificado').value
+            rescue Exception => e
+              @no_csd_emisor = nil
+              @error = true
+              @errors << "No se ha podido obtener el CSD del emisor"
+            end
           else
             @xml = nil
             @error = true
@@ -58,6 +67,7 @@ module FmTimbradoCfdi
           @xml = nil
           @cbb = nil
           @timbre = nil
+          @no_csd_emisor = nil
           #@errors << savon_response.http_error.to_s if savon_response.http_error.present?
         end
 
@@ -85,6 +95,10 @@ module FmTimbradoCfdi
 
     def timbre_present?
       not @timbre.nil?
+    end
+
+    def no_csd_emisor_present?
+      not @no_csd_emisor.nil?
     end
   end #class
 end #module
