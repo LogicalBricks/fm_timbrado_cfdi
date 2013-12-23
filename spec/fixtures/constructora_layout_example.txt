@@ -1,7 +1,7 @@
 [Encabezado]
 
-serie|AA
-fecha|asignaFecha
+serie|
+fecha|--fecha-comprobante--
 folio|
 tipoDeComprobante|egreso
 formaDePago|PAGO EN UNA SOLA EXHIBICIÓN
@@ -20,8 +20,6 @@ LugarExpedicion|Nuevo León, México.
 tipoDocumento|Factura
 numeropedido|
 observaciones|Efectos Fiscales al Pago
-TransID|58921
-
 
 [Emisor]
 
