@@ -5,10 +5,10 @@ module FmTimbradoCfdi
   class FmCliente
     #attrs
     attr_accessor :user_id, :user_pass, :namespace, :fm_wsdl, :endpoint, :ssl_verify_mode, :log, :log_level
-    
+
     def initialize
       # La configuracion por default es la del ambiente de pruebas de FM
-      # Datos de acceso al webservice 
+      # Datos de acceso al webservice
       @user_id = 'UsuarioPruebasWS'
       @user_pass = 'b9ec2afa3361a59af4b4d102d3f704eabdf097d4'
       # Datos del webservide de prueba
@@ -30,7 +30,7 @@ module FmTimbradoCfdi
         soap.namespace = @namespace
         soap.body = { "param0" => {
           "UserPass" => user_pass,
-          "UserID" => user_id, 
+          "UserID" => user_id,
           "emisorRFC" => rfc_emisor,
           "text2CFDI" => text_to_cfdi,
           "generarCBB" => generar_cbb
@@ -43,9 +43,9 @@ module FmTimbradoCfdi
     def configurar_cliente
       # Configuración de Savon
       Savon.configure do |config|
-        config.raise_errors = false 
-        config.log_level = log_level 
-        config.log = log 
+        config.raise_errors = false
+        config.log_level = log_level
+        config.log = log
       end
 
       @client  = Savon::Client.new do

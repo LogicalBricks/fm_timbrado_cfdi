@@ -15,15 +15,15 @@ describe FmTimbradoCfdi do
 
   describe ".timbra_cfdi_layout" do
     it "debe timbrar correctamente el archivo de prueba" do
-      fecha_comprobante = Time.now - 3600
-      layout = File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', fecha_comprobante.strftime("%FT%T"))
+      #FmTimbradoCfdi.cliente.log = true
+      #FmTimbradoCfdi.cliente.log_level = :debug
+      layout = File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', 'asignarFecha' )
       respuesta = FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout
       respuesta.should be_valid
     end # it "debe timbrar correctamente ..."
 
     it "debe timbrar correctamente el archivo de prueba de constructora" do
-      fecha_comprobante = Time.now - 3600
-      layout = File.open('spec/fixtures/constructora_layout_example.txt').read.gsub('--fecha-comprobante--', fecha_comprobante.strftime("%FT%T"))
+      layout = File.open('spec/fixtures/constructora_layout_example.txt').read
       respuesta = FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout
       respuesta.should be_valid
       respuesta.xml_present?.should be_true
@@ -34,7 +34,7 @@ describe FmTimbradoCfdi do
     it "no debe timbrar el comprobante si tiene más de 72 horas de haber sido generado" do
       fecha_comprobante = Time.now - 73*3600
       layout = File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', fecha_comprobante.strftime("%FT%T"))
-      respuesta = FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout 
+      respuesta = FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout
       respuesta.should_not be_valid
     end # it no debe timbrar el comprobante si ...
   end #describe ".timbra_cfdi_layout"
@@ -47,7 +47,7 @@ describe FmTimbradoCfdi do
         config.namespace = "http://logicalbricks.com/soap"
         config.endpoint = "http://logicalbricks.com/endpoint"
         config.fm_wsdl = "http://logicalbricks.com/wsdl"
-      end 
+      end
 
       FmTimbradoCfdi.cliente.user_id.should == 'mi_usuario'
       FmTimbradoCfdi.cliente.user_pass.should == 'secret'
@@ -57,4 +57,4 @@ describe FmTimbradoCfdi do
     end # describe it "debe cambiar los valores ..."
   end #describe .configurar
 
-end #describe FmTimbradoCfdi 
+end #describe FmTimbradoCfdi

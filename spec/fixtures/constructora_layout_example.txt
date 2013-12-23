@@ -1,7 +1,7 @@
 [Encabezado]
 
 serie|AA
-fecha|--fecha-comprobante--
+fecha|asignaFecha
 folio|
 tipoDeComprobante|egreso
 formaDePago|PAGO EN UNA SOLA EXHIBICIÓN
@@ -31,7 +31,7 @@ RegimenFiscal|REGIMEN GENERAL DE LEY
 
 [DomicilioFiscal]
 
-calle|Calle 
+calle|Calle
 noExterior|Número Ext.
 noInterior|Número Int.
 colonia|Colonia

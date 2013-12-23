@@ -1,4 +1,4 @@
-AX|101|--fecha-comprobante--|San Pedro Garza García|ingreso|Contado|Efectivo|Pago en una sola Exhibición|0009 - Banamex|100.00|0.00|116.00|MXN|0.00|20001000000100001703|
+A1|101|--fecha-comprobante--|San Pedro Garza García|ingreso|Contado|Efectivo|Pago en una sola Exhibición|0009 - Banamex|100.00|0.00|116.00|MXN|0.00||
 ESI920427886|COMERCIALIZADORA SA DE CV|PERSONA MORAL REGIMEN GENERAL DE LEY.
 Calzada del Valle|90|int-10|Col. Del Valle||San Pedro Garza Garcia.|Nuevo León|México|76888
 Calzada del Valle(Sucursal)|90|int-10|Col. Del Valle||San Pedro Garza Garcia.|Nuevo León|México|76888

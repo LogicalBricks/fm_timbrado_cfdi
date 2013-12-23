@@ -5,7 +5,7 @@ require 'fm_timbrado_cfdi/fm_timbre'
 
 module FmTimbradoCfdi
   class FmRespuesta
-    attr_reader :errors, :pdf, :xml, :cbb, :timbre, :no_csd_emisor 
+    attr_reader :errors, :pdf, :xml, :cbb, :timbre, :no_csd_emisor
     def initialize(savon_response)
       #inicializamos el estado del objeto
       parse(savon_response)
@@ -38,10 +38,11 @@ module FmTimbradoCfdi
           end
           #Parseamos el nodo timbre
           if not @doc.xpath("//txt").empty? then
-            @timbre = FmTimbre.new Base64::decode64( @doc.xpath("//txt")[0].content ) 
+            @timbre = FmTimbre.new Base64::decode64( @doc.xpath("//txt")[0].content )
           else
             @timbre = nil
-            @error = true
+            #@error = true
+            @error = false
             @errors << "No se ha encontrado el nodo para el timbre fiscal"
           end
           #Parseamos el nodo pdf
@@ -49,16 +50,18 @@ module FmTimbradoCfdi
             @pdf = Base64::decode64 @doc.xpath("//pdf")[0].content
           else
             @pdf = nil
-            @error = true unless not @doc.xpath("//png").empty? 
-            @errors << "No se ha encontrado el nodo para la imagen cbb" unless not @doc.xpath("//png").empty? 
+            #@error = true unless not @doc.xpath("//png").empty?
+            @error = false
+            @errors << "No se ha encontrado el nodo para la imagen cbb" unless not @doc.xpath("//png").empty?
           end
           #Parseamos el nodo cbb
           if not @doc.xpath("//png").empty? then
             @cbb = Base64::decode64 @doc.xpath("//png")[0].content
           else
             @cbb = nil
-            @error = true unless not @doc.xpath("//pdf").empty? 
-            @errors << "No se ha encontrado el nodo para el archivo pdf" unless not @doc.xpath("//pdf").empty? 
+            #@error = true unless not @doc.xpath("//pdf").empty?
+            @error = false
+            @errors << "No se ha encontrado el nodo para el archivo pdf" unless not @doc.xpath("//pdf").empty?
           end
         else
           @error = true
@@ -68,7 +71,6 @@ module FmTimbradoCfdi
           @cbb = nil
           @timbre = nil
           @no_csd_emisor = nil
-          #@errors << savon_response.http_error.to_s if savon_response.http_error.present?
         end
 
       rescue Exception => e
