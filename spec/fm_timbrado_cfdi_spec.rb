@@ -14,31 +14,34 @@ describe FmTimbradoCfdi do
 
 
   describe ".timbra_cfdi_layout" do
-    it "debe timbrar correctamente el archivo de prueba" do
-      layout = File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', 'asignarFecha' )
-      respuesta = FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout
-      respuesta.should be_valid
-    end # it "debe timbrar correctamente ..."
+    context "timbrado correcto" do
+      context 'archivo de prueba simple' do
+        let(:layout){File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', 'asignarFecha' )}
+        let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout }
+        it { respuesta.should be_valid }
+        it { respuesta.should be_xml }
+      end
 
-    it "debe timbrar correctamente el archivo de prueba de constructora" do
-      layout = File.open('spec/fixtures/constructora_layout_example.txt').read.gsub('--fecha-comprobante--', 'asignarFecha')
-      respuesta = FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout
-      respuesta.should be_valid
-      respuesta.xml_present?.should be_true
-      #respuesta.pdf_present?.should be_true
-      #respuesta.timbre_present?.should be_true
-    end # it "debe timbrar correctamente ..."
+      context 'archivo de constructoras' do
+        let(:layout){File.open('spec/fixtures/constructora_layout_example.txt').read.gsub('--fecha-comprobante--', 'asignarFecha')}
+        let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout }
+        it { respuesta.should be_valid }
+        it { respuesta.should be_xml }
+      end
+    end
 
-    it "no debe timbrar el comprobante si tiene más de 72 horas de haber sido generado" do
-      fecha_comprobante = Time.now - 73*3600
-      layout = File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', fecha_comprobante.strftime("%FT%T"))
-      respuesta = FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout
-      respuesta.should_not be_valid
-    end # it no debe timbrar el comprobante si ...
-  end #describe ".timbra_cfdi_layout"
+    context 'timbrado incorrecto' do
+      it "no timbra el comprobante si tiene más de 72 horas de haber sido generado" do
+        fecha_comprobante = Time.now - 73*3600
+        layout = File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', fecha_comprobante.strftime("%FT%T"))
+        respuesta = FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout
+        respuesta.should_not be_valid
+      end
+    end
+  end
 
   describe ".configurar" do
-    it "debe cambiar los valores de conexión por los proporcionados" do
+    it "cambia los valores de conexión por los proporcionados" do
       FmTimbradoCfdi.configurar do |config|
         config.user_id = "mi_usuario"
         config.user_pass = "secret"

@@ -42,25 +42,30 @@ module FmTimbradoCfdi
       not @error
     end
 
-    def xml_present?
+    def xml?
       not @xml.nil?
     end
+    alias :xml_present? :xml?
 
-    def cbb_present?
+    def cbb?
       not @cbb.nil?
     end
+    alias :cbb_present? :cbb?
 
-    def pdf_present?
+    def pdf?
       not @pdf.nil?
     end
+    alias :pdf_present? :pdf?
 
-    def timbre_present?
+    def timbre?
       not @timbre.nil?
     end
+    alias :timbre_present? :timbre?
 
-    def no_csd_emisor_present?
+    def no_csd_emisor?
       not @no_csd_emisor.nil?
     end
+    alias :no_csd_emisor_present? :no_csd_emisor?
 
     private
 
@@ -94,7 +99,6 @@ module FmTimbradoCfdi
         @error = false
         @errors << "No se ha encontrado el nodo para el timbre fiscal"
       end
-
     end
 
     def obtener_pdf(doc)
