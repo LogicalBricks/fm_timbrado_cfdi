@@ -22,6 +22,7 @@ module FmTimbradoCfdi
           obtener_xml(@doc)
           obtener_timbre(@doc)
           obtener_pdf(@doc)
+          obtener_cbb(@doc)
         else
           @error = true
           @errors << savon_response.soap_fault.to_s if savon_response.soap_fault.present?
@@ -95,7 +96,6 @@ module FmTimbradoCfdi
         @timbre = FmTimbre.new Base64::decode64( doc.xpath("//txt")[0].content )
       else
         @timbre = nil
-        #@error = true
         @error = false
         @errors << "No se ha encontrado el nodo para el timbre fiscal"
       end
@@ -119,7 +119,6 @@ module FmTimbradoCfdi
         @cbb = Base64::decode64 doc.xpath("//png")[0].content
       else
         @cbb = nil
-        #@error = true unless not doc.xpath("//pdf").empty?
         @error = false
         @errors << "No se ha encontrado el nodo para el archivo pdf" unless not @doc.xpath("//pdf").empty?
       end

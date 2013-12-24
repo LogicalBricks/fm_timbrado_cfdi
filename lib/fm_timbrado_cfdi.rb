@@ -10,7 +10,7 @@ module FmTimbradoCfdi
     yield cliente
   end
 
-  def cliente 
+  def cliente
     @cliente ||= FmCliente.new
   end
 
@@ -32,6 +32,10 @@ module FmTimbradoCfdi
   # * <tt>generar_cbb</tt> - Es una bandera que indica si debe generarse el código cbb, si se genera el cbb no se genera el pdf, por default es false
   def timbra_cfdi_layout (rfc, layout, generar_cbb = false)
     respuesta = cliente.peticion_timbrar rfc, layout, generar_cbb
+  end
+
+  def timbrar (rfc, layout, opciones= {})
+    respuesta = cliente.timbrar rfc, layout, opciones
   end
 
   #no implementado todavía
