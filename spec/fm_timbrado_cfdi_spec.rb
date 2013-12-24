@@ -22,7 +22,7 @@ describe FmTimbradoCfdi do
         it { respuesta.should be_valid }
         it { respuesta.should be_xml }
 
-        context "formatos cbb" do
+        context "formato cbb" do
           let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout, true}
           it { respuesta.should be_valid }
           it { respuesta.should be_xml }
@@ -49,7 +49,7 @@ describe FmTimbradoCfdi do
         it { respuesta.should be_valid }
         it { respuesta.should be_xml }
 
-        context "formatos cbb" do
+        context "formato cbb" do
           let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarCBB' => true }
           it { respuesta.should be_valid }
           it { respuesta.should be_xml }
@@ -63,13 +63,19 @@ describe FmTimbradoCfdi do
           it { respuesta.should be_timbre }
         end
 
+        context "formato pdf" do
+          let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarPDF' => true }
+          it { respuesta.should be_valid }
+          it { respuesta.should be_xml }
+          it { respuesta.should be_pdf }
+        end
       end
     end
 
     context 'archivo de constructoras' do
       let(:plantilla){File.open('spec/fixtures/constructora_layout_example.txt').read}
       let(:layout){plantilla.gsub('--fecha-comprobante--', 'asignarFecha')}
-      let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout }
+      let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout }
       it { respuesta.should be_valid }
       it { respuesta.should be_xml }
     end
@@ -79,7 +85,7 @@ describe FmTimbradoCfdi do
     it "no timbra el comprobante si tiene más de 72 horas de haber sido generado" do
       fecha_comprobante = Time.now - 73*3600
       layout = File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', fecha_comprobante.strftime("%FT%T"))
-      respuesta = FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout
+      respuesta = FmTimbradoCfdi.timbrar 'ESI920427886', layout
       respuesta.should_not be_valid
     end
   end
@@ -100,6 +106,6 @@ describe ".configurar" do
     FmTimbradoCfdi.cliente.namespace.should == 'http://logicalbricks.com/soap'
     FmTimbradoCfdi.cliente.endpoint.should == 'http://logicalbricks.com/endpoint'
     FmTimbradoCfdi.cliente.fm_wsdl.should == 'http://logicalbricks.com/wsdl'
-  end # describe it "debe cambiar los valores ..."
-end #describe .configurar
+  end
+end
 
