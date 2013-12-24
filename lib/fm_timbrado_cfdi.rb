@@ -23,7 +23,7 @@ module FmTimbradoCfdi
     #procesar rfc del emisor
     emisor = factura_xml.xpath("//cfdi:Emisor")
     rfc = emisor[0]['rfc']
-    respuesta = cliente.peticion_timbrar rfc, factura_xml.to_s, generar_cbb
+    respuesta = cliente.timbrar rfc, factura_xml.to_s, 'generarCBB' => generar_cbb
   end
 
   #Envía un archivo al PAC para ser timbrado en formato layout
@@ -31,7 +31,7 @@ module FmTimbradoCfdi
   # * <tt>layout</tt> - Es el archivo layout a ser timbrado como un string
   # * <tt>generar_cbb</tt> - Es una bandera que indica si debe generarse el código cbb, si se genera el cbb no se genera el pdf, por default es false
   def timbra_cfdi_layout (rfc, layout, generar_cbb = false)
-    respuesta = cliente.peticion_timbrar rfc, layout, generar_cbb
+    respuesta = cliente.timbrar rfc, layout, 'generarCBB' => generar_cbb
   end
 
   def timbrar (rfc, layout, opciones= {})

@@ -2,6 +2,8 @@
 
 Implementa la conexión con el servicio de timbrado cfdi con el PAC Facturación Moderna [Guía de Desarrollo de FM](http://developers.facturacionmoderna.com).
 
+No incluye ninguna funcionalidad de sellado.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -21,13 +23,13 @@ Or install it yourself as:
 Para usar la gema es necesario realizar la configuración con los valores de conexión:
 ```
 FmTimbradoCfdi.configurar do |config|
-  config.user_id = 'user_id' 
-  config.user_pass = 'password' 
-  config.namespace = 'http://serviciondetimrado...' 
+  config.user_id = 'user_id'
+  config.user_pass = 'password'
+  config.namespace = 'http://serviciondetimrado...'
   config.endpoint = 'http://serviciondetimrado...'
   config.fm_wsdl = 'http://serviciondetimrado...'
   config.log = 'path_to_log'
-  config.ssl_verify_mode = true 
+  config.ssl_verify_mode = true
 end # configurar
 ```
 
