@@ -16,14 +16,16 @@ describe FmTimbradoCfdi do
   describe ".timbra_cfdi_layout" do
     context "timbrado correcto" do
       context 'archivo de prueba simple' do
-        let(:layout){File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', 'asignarFecha' )}
+        let(:plantilla){File.open('spec/fixtures/layout_example.txt').read}
+        let(:layout){ plantilla.gsub('--fecha-comprobante--', 'asignarFecha' )}
         let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout }
         it { respuesta.should be_valid }
         it { respuesta.should be_xml }
       end
 
       context 'archivo de constructoras' do
-        let(:layout){File.open('spec/fixtures/constructora_layout_example.txt').read.gsub('--fecha-comprobante--', 'asignarFecha')}
+        let(:plantilla){File.open('spec/fixtures/constructora_layout_example.txt').read}
+        let(:layout){plantilla.gsub('--fecha-comprobante--', 'asignarFecha')}
         let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout }
         it { respuesta.should be_valid }
         it { respuesta.should be_xml }

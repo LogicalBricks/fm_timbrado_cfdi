@@ -22,21 +22,27 @@ module FmTimbradoCfdi
       @ssl_verify_mode = :none
     end
 
-    def peticion_timbrar rfc_emisor, documento, generar_cbb
+    def timbrar(rfc, documento, opciones={})
       text_to_cfdi = Base64::encode64( documento )
       # Realizamos la peticion
       configurar_cliente
       response = @client.call(:request_timbrar_cfdi,
-        message: { "param0" => {
-          "UserPass" => user_pass,
-          "UserID" => user_id,
-          "emisorRFC" => rfc_emisor,
-          "text2CFDI" => text_to_cfdi,
-          "generarCBB" => generar_cbb
-        }}
-      )
+                              message:
+                              { "param0" => {
+                                "UserPass" => user_pass,
+                                "UserID" => user_id,
+                                "emisorRFC" => rfc,
+                                "text2CFDI" => text_to_cfdi,
+                              }.merge(opciones)
+                              }
+                             )
       FmRespuesta.new(response)
-    end #peticion timbrar
+
+    end
+
+    def peticion_timbrar rfc_emisor, documento, generar_cbb
+      timbrar(rfc_emisor, documento, 'generarCBB' => generar_cbb)
+    end
 
     private
     def configurar_cliente
