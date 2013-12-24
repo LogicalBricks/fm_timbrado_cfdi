@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency "nokogiri"
-  gem.add_dependency "savon", "= 1.2.0"
+  gem.add_dependency "savon"
 
   gem.add_development_dependency "rspec"
 end

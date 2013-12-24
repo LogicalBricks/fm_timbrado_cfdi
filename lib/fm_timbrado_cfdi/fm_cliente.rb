@@ -11,7 +11,7 @@ module FmTimbradoCfdi
       # Datos de acceso al webservice
       @user_id = 'UsuarioPruebasWS'
       @user_pass = 'b9ec2afa3361a59af4b4d102d3f704eabdf097d4'
-      # Datos del webservide de prueba
+      # Datos del webservise de prueba
       @namespace = "https://t2demo.facturacionmoderna.com/timbrado/soap"
       @endpoint = "https://t2demo.facturacionmoderna.com/timbrado/soap"
       @fm_wsdl = "https://t2demo.facturacionmoderna.com/timbrado/wsdl"
@@ -26,34 +26,28 @@ module FmTimbradoCfdi
       text_to_cfdi = Base64::encode64( documento )
       # Realizamos la peticion
       configurar_cliente
-      response = @client.request "ns1:requestTimbrarCFDI" do
-        soap.namespace = @namespace
-        soap.body = { "param0" => {
+      response = @client.call(:request_timbrar_cfdi,
+        message: { "param0" => {
           "UserPass" => user_pass,
           "UserID" => user_id,
           "emisorRFC" => rfc_emisor,
           "text2CFDI" => text_to_cfdi,
           "generarCBB" => generar_cbb
-        } }
-      end # response
+        }}
+      )
       FmRespuesta.new(response)
     end #peticion timbrar
 
     private
     def configurar_cliente
-      # Configuración de Savon
-      Savon.configure do |config|
-        config.raise_errors = false
-        config.log_level = log_level
-        config.log = log
-      end
-
-      @client  = Savon::Client.new do
-        http.auth.ssl.verify_mode = ssl_verify_mode
-        wsdl.document = fm_wsdl
-        wsdl.endpoint = endpoint
-      end
-      HTTPI.log =  log
+      @client  = Savon.client(
+        ssl_verify_mode: ssl_verify_mode,
+        wsdl: fm_wsdl,
+        endpoint: endpoint,
+        raise_errors: false,
+        log_level: log_level,
+        log: log
+      )
     end
 
   end #class
