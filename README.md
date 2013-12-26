@@ -1,5 +1,6 @@
 # FmTimbradoCfdi
 [![Build Status](https://travis-ci.org/LogicalBricks/fm_timbrado_cfdi.png?branch=master)](https://travis-ci.org/LogicalBricks/fm_timbrado_cfdi)
+[![Code Climate](https://codeclimate.com/github/LogicalBricks/fm_timbrado_cfdi.png)](https://codeclimate.com/github/LogicalBricks/fm_timbrado_cfdi)
 
 Implementa la conexión con el servicio de timbrado cfdi con el PAC Facturación Moderna [Guía de Desarrollo de FM](http://developers.facturacionmoderna.com).
 
