@@ -91,7 +91,7 @@ describe FmTimbradoCfdi do
 
   context 'timbrado incorrecto' do
     it "no timbra el comprobante si tiene más de 72 horas de haber sido generado" do
-      fecha_comprobante = Time.now - 73*3600
+      fecha_comprobante = Time.now - 120*3600
       layout = File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', fecha_comprobante.strftime("%FT%T"))
       respuesta = FmTimbradoCfdi.timbrar 'ESI920427886', layout
       respuesta.should_not be_valid
