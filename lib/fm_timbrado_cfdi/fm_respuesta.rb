@@ -11,17 +11,16 @@ module FmTimbradoCfdi
     end
 
     def parse (savon_response)
-      @error = false
       @errors = []
       begin
         if savon_response.success? then
           @doc = Nokogiri::XML(savon_response.to_xml)
           @xml = obtener_xml(@doc)
+          @no_csd_emisor = obtener_no_csd_emisor(@xml) if @xml
           @timbre = obtener_timbre(@doc)
           @pdf = obtener_pdf(@doc)
           @cbb = obtener_cbb(@doc)
         else
-          @error = true
           @errors << savon_response.soap_fault.to_s if savon_response.soap_fault.present?
           @pdf = nil
           @xml = nil
@@ -31,64 +30,53 @@ module FmTimbradoCfdi
         end
 
       rescue Exception => e
-        @error = true
         @errors << "No se ha podido realizar el parseo de la respuesta. #{e.message}"
       end
     end #parse
 
     def valid?
-      not @error
+      @errors.empty?
     end
 
     def xml?
-      not @xml.nil?
+      @xml
     end
     alias :xml_present? :xml?
 
     def cbb?
-      not @cbb.nil?
+      @cbb
     end
     alias :cbb_present? :cbb?
 
     def pdf?
-      not @pdf.nil?
+      @pdf
     end
     alias :pdf_present? :pdf?
 
     def timbre?
-      not @timbre.nil?
+      @timbre
     end
     alias :timbre_present? :timbre?
 
     def no_csd_emisor?
-      not @no_csd_emisor.nil?
+      @no_csd_emisor
     end
     alias :no_csd_emisor_present? :no_csd_emisor?
 
     private
 
     def obtener_xml(doc)
-      if not doc.xpath("//xml").empty? then
-        @xml = Base64::decode64 doc.xpath("//xml")[0].content
-        # tratamos de obtener el no de serie del CSD del emisor
-        begin
-          factura_xml = Nokogiri::XML(@xml)
-          @no_csd_emisor = factura_xml.xpath("//cfdi:Comprobante").attribute('noCertificado').value
-        rescue Exception => e
-          @no_csd_emisor = nil
-          @error = true
-          @errors << "No se ha podido obtener el CSD del emisor"
-        end
+      unless doc.xpath("//xml").empty? then
+        Base64::decode64 doc.xpath("//xml")[0].content
       else
-        @xml = nil
-        @error = true
         @errors << "No se ha encontrado el nodo xml"
+        nil
       end
     end
 
     def obtener_timbre(doc)
       unless doc.xpath("//txt").empty?
-        @timbre = FmTimbre.new Base64::decode64( doc.xpath("//txt")[0].content )
+        FmTimbre.new Base64::decode64( doc.xpath("//txt")[0].content )
       end
     end
 
@@ -107,11 +95,10 @@ module FmTimbradoCfdi
     def obtener_no_csd_emisor(xml)
       begin
         factura_xml = Nokogiri::XML(@xml)
-        @no_csd_emisor = factura_xml.xpath("//cfdi:Comprobante").attribute('noCertificado').value
+        factura_xml.xpath("//cfdi:Comprobante").attribute('noCertificado').value
       rescue Exception => e
-        @error = true
         @errors << "No se ha podido obtener el CSD del emisor"
-        @no_csd_emisor = nil
+        nil
       end
     end
   end
