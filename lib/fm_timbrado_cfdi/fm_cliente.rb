@@ -3,7 +3,6 @@ require 'fm_timbrado_cfdi/fm_respuesta'
 
 module FmTimbradoCfdi
   class FmCliente
-    #attrs
     attr_accessor :user_id, :user_pass, :namespace, :fm_wsdl, :endpoint, :ssl_verify_mode, :log, :log_level
 
     def initialize
@@ -55,5 +54,5 @@ module FmTimbradoCfdi
       )
     end
 
-  end #class
-end#module
+  end
+end
