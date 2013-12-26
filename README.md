@@ -1,4 +1,3 @@
-
 # FmTimbradoCfdi
 [![Build Status](https://travis-ci.org/LogicalBricks/fm_timbrado_cfdi.png?branch=master)](https://travis-ci.org/LogicalBricks/fm_timbrado_cfdi)
 
@@ -40,25 +39,25 @@ Y realizar la petición de timbrado:
 
 ```ruby
 respuesta = FmTimbradoCfdi.timbra_cfdi_layout rfc, 'layout_file', false
-=> # Petición sin generación del CBB
+# => Petición sin generación del CBB
 respuesta = FmTimbradoCfdi.timbra_cfdi_layout rfc, 'layout_file', true
-=> # Petición con generación del CBB
+# => Petición con generación del CBB
 ```
 
 Si cuentas con el XML sellado puedes hacer lo siguiente:
 
 ```ruby
 respuesta = FmTimbradoCfdi.timbra_cfdi_xml 'archivo_xml', false
-=> # Petición sin generación del CBB
+# => Petición sin generación del CBB
 respuesta = FmTimbradoCfdi.timbra_cfdi_xml 'archivo_xml', true
-=> # Petición con generación del CBB
+# => Petición con generación del CBB
 ```
 
 Para un método más general de timbrado que se encuentre más acorde a la documentación de [Facturación Moderna](http://developers.facturacionmoderna.com):
 
 ```ruby
 respuesta = FmTimbradoCfdi.timbrar rfc_emisor, 'archivo_xml_o_layout', 'generarCBB' => false, 'generarPDF' => true, 'generarTXT' => false
-=> # Generar la respuesta con formato PDF, pero sin formato CBB ni TXT
+# => Generar la respuesta con formato PDF, pero sin formato CBB ni TXT
 ```
 
 
