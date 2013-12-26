@@ -24,7 +24,7 @@ o instala de forma independiente:
 
 Para usar la gema es necesario realizar la configuración con los valores de conexión:
 
-```
+```ruby
 FmTimbradoCfdi.configurar do |config|
   config.user_id = 'user_id'
   config.user_pass = 'password'
@@ -38,7 +38,7 @@ end # configurar
 
 Y realizar la petición de timbrado:
 
-```
+```ruby
 respuesta = FmTimbradoCfdi.timbra_cfdi_layout rfc, 'layout_file', false
 => # Petición sin generación del CBB
 respuesta = FmTimbradoCfdi.timbra_cfdi_layout rfc, 'layout_file', true
@@ -47,7 +47,7 @@ respuesta = FmTimbradoCfdi.timbra_cfdi_layout rfc, 'layout_file', true
 
 Si cuentas con el XML sellado puedes hacer lo siguiente:
 
-```
+```ruby
 respuesta = FmTimbradoCfdi.timbra_cfdi_xml 'archivo_xml', false
 => # Petición sin generación del CBB
 respuesta = FmTimbradoCfdi.timbra_cfdi_xml 'archivo_xml', true
@@ -56,7 +56,7 @@ respuesta = FmTimbradoCfdi.timbra_cfdi_xml 'archivo_xml', true
 
 Para un método más general de timbrado que se encuentre más acorde a la documentación de [Facturación Moderna](http://developers.facturacionmoderna.com):
 
-```
+```ruby
 respuesta = FmTimbradoCfdi.timbrar rfc_emisor, 'archivo_xml_o_layout', 'generarCBB' => false, 'generarPDF' => true, 'generarTXT' => false
 => # Generar la respuesta con formato PDF, pero sin formato CBB ni TXT
 ```
