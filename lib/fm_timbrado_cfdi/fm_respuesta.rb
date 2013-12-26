@@ -7,17 +7,14 @@ module FmTimbradoCfdi
   class FmRespuesta
     attr_reader :errors, :pdf, :xml, :cbb, :timbre, :no_csd_emisor
     def initialize(savon_response)
-      #inicializamos el estado del objeto
       parse(savon_response)
-    end #initialize
+    end
 
     def parse (savon_response)
       @error = false
       @errors = []
       begin
-        #vemos si la petción fue correcta
         if savon_response.success? then
-          #cargamos la respuesta en xml
           @doc = Nokogiri::XML(savon_response.to_xml)
           obtener_xml(@doc)
           obtener_timbre(@doc)
@@ -71,7 +68,6 @@ module FmTimbradoCfdi
     private
 
     def obtener_xml(doc)
-      #Parseamos el nodo xml
       if not doc.xpath("//xml").empty? then
         @xml = Base64::decode64 doc.xpath("//xml")[0].content
         # tratamos de obtener el no de serie del CSD del emisor
@@ -91,37 +87,27 @@ module FmTimbradoCfdi
     end
 
     def obtener_timbre(doc)
-      #Parseamos el nodo timbre
-      if not doc.xpath("//txt").empty? then
+      unless doc.xpath("//txt").empty?
         @timbre = FmTimbre.new Base64::decode64( doc.xpath("//txt")[0].content )
       else
         @timbre = nil
-        @error = false
-        @errors << "No se ha encontrado el nodo para el timbre fiscal"
       end
     end
 
     def obtener_pdf(doc)
-      #Parseamos el nodo pdf
-      if not doc.xpath("//pdf").empty? then
+      unless doc.xpath("//pdf").empty?
         @pdf = Base64::decode64 doc.xpath("//pdf")[0].content
       else
         @pdf = nil
-        #@error = true unless not @doc.xpath("//png").empty?
-        @error = false
-        @errors << "No se ha encontrado el nodo para la imagen cbb" unless not @doc.xpath("//png").empty?
       end
     end
 
     def obtener_cbb(doc)
-      #Parseamos el nodo cbb
-      if not doc.xpath("//png").empty? then
+      unless doc.xpath("//png").empty?
         @cbb = Base64::decode64 doc.xpath("//png")[0].content
       else
         @cbb = nil
-        @error = false
-        @errors << "No se ha encontrado el nodo para el archivo pdf" unless not @doc.xpath("//pdf").empty?
       end
     end
-  end #class
-end #module
+  end
+end

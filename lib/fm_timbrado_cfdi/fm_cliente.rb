@@ -37,7 +37,6 @@ module FmTimbradoCfdi
                               }
                              )
       FmRespuesta.new(response)
-
     end
 
     def peticion_timbrar rfc_emisor, documento, generar_cbb
