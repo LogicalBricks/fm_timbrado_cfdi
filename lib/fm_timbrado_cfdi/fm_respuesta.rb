@@ -22,17 +22,12 @@ module FmTimbradoCfdi
           @cbb = obtener_cbb(@doc)
         else
           @errors << savon_response.soap_fault.to_s if savon_response.soap_fault.present?
-          @pdf = nil
-          @xml = nil
-          @cbb = nil
-          @timbre = nil
-          @no_csd_emisor = nil
+          @doc = @xml = @no_csd_emisor = @timbre = @pdf = @cbb = nil
         end
-
       rescue Exception => e
         @errors << "No se ha podido realizar el parseo de la respuesta. #{e.message}"
       end
-    end #parse
+    end
 
     def valid?
       @errors.empty?
@@ -94,7 +89,7 @@ module FmTimbradoCfdi
 
     def obtener_no_csd_emisor(xml)
       begin
-        factura_xml = Nokogiri::XML(@xml)
+        factura_xml = Nokogiri::XML(xml)
         factura_xml.xpath("//cfdi:Comprobante").attribute('noCertificado').value
       rescue Exception => e
         @errors << "No se ha podido obtener el CSD del emisor"

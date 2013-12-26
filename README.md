@@ -6,21 +6,22 @@ No incluye ninguna funcionalidad de sellado.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Agrega esto al Gemfile de tu aplicación:
 
     gem 'fm_timbrado_cfdi'
 
-And then execute:
+Y ejecuta:
 
     $ bundle
 
-Or install it yourself as:
+o instala de forma independiente:
 
     $ gem install fm_timbrado_cfdi
 
-## Usage
+## Uso
 
 Para usar la gema es necesario realizar la configuración con los valores de conexión:
+
 ```
 FmTimbradoCfdi.configurar do |config|
   config.user_id = 'user_id'
@@ -36,16 +37,38 @@ end # configurar
 Y realizar la petición de timbrado:
 
 ```
-response = FmTimbradoCfdi.timbra_cfdi_layout rfc, 'layout_file', true
+respuesta = FmTimbradoCfdi.timbra_cfdi_layout rfc, 'layout_file', false
+=> # Petición sin generación del CBB
+respuesta = FmTimbradoCfdi.timbra_cfdi_layout rfc, 'layout_file', true
+=> # Petición con generación del CBB
+```
+
+Si cuentas con el XML sellado puedes hacer lo siguiente:
+
+```
+respuesta = FmTimbradoCfdi.timbra_cfdi_xml 'archivo_xml', false
+=> # Petición sin generación del CBB
+respuesta = FmTimbradoCfdi.timbra_cfdi_xml 'archivo_xml', true
+=> # Petición con generación del CBB
+```
+
+Para un método más general de timbrado que se encuentre más acorde a la documentación de [Facturación Moderna](http://developers.facturacionmoderna.com):
+
+```
+respuesta = FmTimbradoCfdi.timbrar rfc_emisor, 'archivo_xml_o_layout', 'generarCBB' => false, 'generarPDF' => true, 'generarTXT' => false
+=> # Generar la respuesta con formato PDF, pero sin formato CBB ni TXT
 ```
 
 
-## Contributing
+El archivo de layout y el XML son string.
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+
+## Contribuciones
+
+1. 'Forkea' el repositorio
+2. Crea una rama con tu funcionalidad (`git checkout -b my-new-feature`)
+3. Envía tus cambios (`git commit -am 'Add some feature'`)
+4. 'Pushea' a la rama (`git push origin my-new-feature`)
+5. Crea un 'Pull request'
 
 Esta gema fue creada por LogicalBricks Solutions.
