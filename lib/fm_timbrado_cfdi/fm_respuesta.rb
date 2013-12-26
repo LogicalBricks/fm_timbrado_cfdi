@@ -34,27 +34,27 @@ module FmTimbradoCfdi
     end
 
     def xml?
-      @xml
+      !!@xml
     end
     alias :xml_present? :xml?
 
     def cbb?
-      @cbb
+      !!@cbb
     end
     alias :cbb_present? :cbb?
 
     def pdf?
-      @pdf
+      !!@pdf
     end
     alias :pdf_present? :pdf?
 
     def timbre?
-      @timbre
+      !!@timbre
     end
     alias :timbre_present? :timbre?
 
     def no_csd_emisor?
-      @no_csd_emisor
+      !!@no_csd_emisor
     end
     alias :no_csd_emisor_present? :no_csd_emisor?
 
