@@ -69,6 +69,14 @@ describe FmTimbradoCfdi do
           it { respuesta.should be_xml }
           it { respuesta.should be_pdf }
         end
+
+        context "formato pdf, pero no cbb, ni txt" do
+          let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarPDF' => true, 'generarCBB' => false, 'generarTXT' => false }
+          it { respuesta.should be_valid }
+          it { respuesta.should be_xml }
+          it { respuesta.should be_pdf }
+          it { respuesta.should_not be_cbb }
+        end
       end
     end
 
