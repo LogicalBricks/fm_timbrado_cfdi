@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'ostruct'
 
 describe FmTimbradoCfdi::FmRespuesta do
-  context "Respuesta no satisfactoria" do
+  context "respuesta no satisfactoria" do
     let(:respuesta_cliente) do
       prueba = OpenStruct.new
       prueba.stub(:success?).and_return(false)
@@ -19,4 +19,11 @@ describe FmTimbradoCfdi::FmRespuesta do
     it { expect(respuesta.timbre?).to eq(false) }
     it { expect(respuesta.no_csd_emisor?).to eq(false) }
   end
+
+  context "respuesta sin xml" do
+    let(:texto_respuesta){File.open('spec/fixtures/soap_response_sin_xml.txt').read}
+    let(:respuesta) { FmTimbradoCfdi::FmRespuesta.new(texto_respuesta) }
+    it { expect(respuesta.valid?).to eq(false) }
+  end
+
 end
