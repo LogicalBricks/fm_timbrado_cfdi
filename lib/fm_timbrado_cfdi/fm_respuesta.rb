@@ -17,7 +17,7 @@ module FmTimbradoCfdi
           @doc = Nokogiri::XML(savon_response.to_xml)
           @xml = obtener_xml(@doc)
           @no_csd_emisor = obtener_no_csd_emisor(@xml) if @xml
-          @timbre = obtener_timbre(@doc)
+          @timbre = obtener_timbre(@xml)
           @pdf = obtener_pdf(@doc)
           @cbb = obtener_cbb(@doc)
         else
@@ -69,10 +69,8 @@ module FmTimbradoCfdi
       end
     end
 
-    def obtener_timbre(doc)
-      unless doc.xpath("//txt").empty?
-        FmTimbre.new Base64::decode64( doc.xpath("//txt")[0].content )
-      end
+    def obtener_timbre(xml)
+      FmTimbre.new(xml) if xml
     end
 
     def obtener_pdf(doc)
