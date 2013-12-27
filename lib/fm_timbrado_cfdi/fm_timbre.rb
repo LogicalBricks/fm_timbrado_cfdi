@@ -28,11 +28,6 @@ module FmTimbradoCfdi
       ns
     end
 
-    def obtener_valor(cadena)
-      valores = cadena.chomp.split('|')
-      valores.size > 1 ? valores[1] : nil
-    end
-
     def atributos
       [ 'trans_id',
         'no_certificado_sat',
