@@ -10,7 +10,7 @@ describe FmTimbradoCfdi do
       FmTimbradoCfdi.cliente.endpoint.should == 'https://t2demo.facturacionmoderna.com/timbrado/soap'
       FmTimbradoCfdi.cliente.fm_wsdl.should == 'https://t2demo.facturacionmoderna.com/timbrado/wsdl'
     end
-  end #describe .cliente"
+  end
 
 
   describe ".timbra_cfdi_layout" do
@@ -97,23 +97,55 @@ describe FmTimbradoCfdi do
       respuesta.should_not be_valid
     end
   end
-end
 
-describe ".configurar" do
-  it "cambia los valores de conexión por los proporcionados" do
-    FmTimbradoCfdi.configurar do |config|
-      config.user_id = "mi_usuario"
-      config.user_pass = "secret"
-      config.namespace = "http://logicalbricks.com/soap"
-      config.endpoint = "http://logicalbricks.com/endpoint"
-      config.fm_wsdl = "http://logicalbricks.com/wsdl"
+  context 'subir certificados' do
+    let(:archivo_certificado) { File.read('spec/fixtures/certificados/20001000000200000192.cer') }
+    let(:archivo_llave) { File.read('spec/fixtures/certificados/20001000000200000192.key') }
+    let(:password) { '12345678a' }
+    describe '.activar_cancelacion' do
+      context 'petición válida' do
+        let(:respuesta){ FmTimbradoCfdi.activar_cancelacion('ESI920427886', archivo_certificado, archivo_llave, password) }
+        it{ expect(respuesta.valid?).to eq(true) }
+      end
+
+      context 'petición inválida' do
+        let(:respuesta){ FmTimbradoCfdi.activar_cancelacion('ESI920427886', archivo_llave, archivo_certificado, password) }
+        it{ expect(respuesta.valid?).to eq(false) }
+      end
     end
 
-    FmTimbradoCfdi.cliente.user_id.should == 'mi_usuario'
-    FmTimbradoCfdi.cliente.user_pass.should == 'secret'
-    FmTimbradoCfdi.cliente.namespace.should == 'http://logicalbricks.com/soap'
-    FmTimbradoCfdi.cliente.endpoint.should == 'http://logicalbricks.com/endpoint'
-    FmTimbradoCfdi.cliente.fm_wsdl.should == 'http://logicalbricks.com/wsdl'
+    describe '.subir_certificado' do
+      context 'petición válida' do
+        let(:respuesta){ FmTimbradoCfdi.subir_certificado('ESI920427886', archivo_certificado, archivo_llave, password) }
+        it{ expect(respuesta.valid?).to eq(true) }
+      end
+
+      context 'petición inválida' do
+        let(:respuesta){ FmTimbradoCfdi.subir_certificado('ESI920427886', archivo_llave, archivo_certificado, password) }
+        it{ expect(respuesta.valid?).to eq(false) }
+      end
+    end
+
   end
+
+  describe ".configurar" do
+    it "cambia los valores de conexión por los proporcionados" do
+      FmTimbradoCfdi.configurar do |config|
+        config.user_id = "mi_usuario"
+        config.user_pass = "secret"
+        config.namespace = "http://logicalbricks.com/soap"
+        config.endpoint = "http://logicalbricks.com/endpoint"
+        config.fm_wsdl = "http://logicalbricks.com/wsdl"
+      end
+
+      FmTimbradoCfdi.cliente.user_id.should == 'mi_usuario'
+      FmTimbradoCfdi.cliente.user_pass.should == 'secret'
+      FmTimbradoCfdi.cliente.namespace.should == 'http://logicalbricks.com/soap'
+      FmTimbradoCfdi.cliente.endpoint.should == 'http://logicalbricks.com/endpoint'
+      FmTimbradoCfdi.cliente.fm_wsdl.should == 'http://logicalbricks.com/wsdl'
+    end
+  end
+
 end
+
 

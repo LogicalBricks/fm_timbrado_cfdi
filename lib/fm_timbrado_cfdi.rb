@@ -50,6 +50,19 @@ module FmTimbradoCfdi
     respuesta = cliente.timbrar rfc, archivo, opciones
   end
 
+  # Public: Envía CSD para que lo almacene el PAC
+  #
+  # rfc - Es el RFC del emisor
+  # certificado - El contenido del archivo de certificado
+  # llave - La llave privada del certificado
+  # password - Contraseña de la llave privada
+  #
+  # Regresa una respuesta SOAP
+  def activar_cancelacion(rfc, certificado, llave, password)
+    respuesta = cliente.subir_certificado rfc, certificado, llave, password
+  end
+  alias :subir_certificado :activar_cancelacion
+
   #no implementado todavía
   def cancela_cfdi (uuid)
   end

@@ -21,7 +21,7 @@ module FmTimbradoCfdi
           @pdf = obtener_pdf(@doc)
           @cbb = obtener_cbb(@doc)
         else
-          @errors << savon_response.soap_fault.to_s if savon_response.soap_fault.present?
+          @errors << savon_response.soap_fault.to_s if savon_response.soap_fault?
           @doc = @xml = @no_csd_emisor = @timbre = @pdf = @cbb = nil
         end
       rescue Exception => e

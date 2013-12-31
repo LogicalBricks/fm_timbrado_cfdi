@@ -1,5 +1,6 @@
 require 'savon'
 require 'fm_timbrado_cfdi/fm_respuesta'
+require 'fm_timbrado_cfdi/fm_respuesta_cancelacion'
 
 module FmTimbradoCfdi
   class FmCliente
@@ -37,6 +38,23 @@ module FmTimbradoCfdi
                              )
       FmRespuesta.new(response)
     end
+
+    def subir_certificado(rfc, certificado, llave, password, opciones = {})
+      configurar_cliente
+      respuesta = @client.call(:activar_cancelacion,
+                   message:
+                   { "param0" => {
+                     "UserPass" => user_pass,
+                     "UserID" => user_id,
+                     "emisorRFC" => rfc,
+                     "archivoCer" => Base64::encode64(certificado),
+                     "archivoKey" => Base64::encode64(llave),
+                     "clave" => password,
+                   }.merge(opciones)
+                   })
+      FmRespuestaCancelacion.new(respuesta)
+    end
+
 
     private
     def configurar_cliente
