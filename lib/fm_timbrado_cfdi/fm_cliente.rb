@@ -55,6 +55,19 @@ module FmTimbradoCfdi
       FmRespuestaCancelacion.new(respuesta)
     end
 
+    def cancelar(rfc, uuid, opciones = {})
+      configurar_cliente
+      respuesta = @client.call(:request_cancelar_cfdi,
+                   message:
+                   { "param0" => {
+                     "UserPass" => user_pass,
+                     "UserID" => user_id,
+                     "emisorRFC" => rfc,
+                     "uuid" => uuid,
+                   }.merge(opciones)
+                   })
+    end
+
 
     private
     def configurar_cliente

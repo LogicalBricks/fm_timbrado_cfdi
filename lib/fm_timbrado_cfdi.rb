@@ -57,14 +57,20 @@ module FmTimbradoCfdi
   # llave - La llave privada del certificado
   # password - Contraseña de la llave privada
   #
-  # Regresa una respuesta SOAP
+  # Regresa un objeto de tipo FmRespuestaCancelacion
   def activar_cancelacion(rfc, certificado, llave, password)
     respuesta = cliente.subir_certificado rfc, certificado, llave, password
   end
   alias :subir_certificado :activar_cancelacion
 
-  #no implementado todavía
-  def cancela_cfdi (uuid)
+  # Public: Envía una petición de cancelación de factura
+  #
+  # rfc - Es el RFC del emisor
+  # uuid - Es el identificador de la factura a cancelar
+  #
+  # Regresa una respuesta SOAP
+  def cancelar(rfc, uuid)
+    respuesta = cliente.cancelar(rfc, uuid)
   end
 
 end

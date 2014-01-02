@@ -6,7 +6,7 @@ require 'fm_timbrado_cfdi/version'
 Gem::Specification.new do |gem|
   gem.name          = "fm_timbrado_cfdi"
   gem.version       = FmTimbradoCfdi::VERSION
-  gem.authors       = ["Carlos García", "Hermes Ojeda Ruiz"]
+  gem.authors       = ["Carlos García", "Hermes Ojeda Ruiz", "Crisóforo Gaspar Hernández @mitogh"]
   gem.email         = ["hermes.ojeda@logicalbricks.com"]
   gem.homepage      = "https://github.com/LogicalBricks/fm_timbrado_cfdi"
   gem.summary       = %q{Implementación en ruby de la conexión con el servicio de timbrado de cfdi con el PAC Facturación Moderna}

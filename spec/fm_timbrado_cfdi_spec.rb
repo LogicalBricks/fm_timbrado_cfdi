@@ -128,6 +128,29 @@ describe FmTimbradoCfdi do
 
   end
 
+  describe ".cancelar" do
+    context "petición inválida" do
+      let(:respuesta){ FmTimbradoCfdi.cancelar('ESI920427886', 'asdasasdsa') }
+      it{ expect(respuesta.success?).to eq(false) }
+    end
+
+    context "formato válido" do
+      let(:respuesta){ FmTimbradoCfdi.cancelar('ESI920427886', '00000000-0000-0000-0000-00000000000000') }
+      it{ expect(respuesta.success?).to eq(false) }
+    end
+
+    context "peticion válida" do
+      let(:uuid) do
+        plantilla = File.open('spec/fixtures/layout_example.txt').read
+        layout = plantilla.gsub('--fecha-comprobante--', 'asignarFecha' )
+        respuesta = FmTimbradoCfdi.timbrar 'ESI920427886', layout
+        respuesta.timbre.uuid
+      end
+      let(:respuesta){ FmTimbradoCfdi.cancelar('ESI920427886', uuid) }
+      it{ expect(respuesta.success?).to eq(true) }
+    end
+  end
+
   describe ".configurar" do
     it "cambia los valores de conexión por los proporcionados" do
       FmTimbradoCfdi.configurar do |config|
