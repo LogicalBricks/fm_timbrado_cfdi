@@ -7,7 +7,7 @@ describe FmTimbradoCfdi::FmRespuesta do
     let(:respuesta_cliente) do
       prueba = OpenStruct.new
       prueba.stub(:success?).and_return(false)
-      prueba.stub_chain(:soap_fault, :present?).and_return(true)
+      prueba.stub_chain(:soap_fault?).and_return(true)
       prueba.stub_chain(:soap_fault, :to_s).and_return('Test Error')
       prueba
     end
