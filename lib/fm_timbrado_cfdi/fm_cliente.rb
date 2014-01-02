@@ -66,6 +66,7 @@ module FmTimbradoCfdi
                      "uuid" => uuid,
                    }.merge(opciones)
                    })
+      FmRespuestaCancelacion.new(respuesta)
     end
 
 

@@ -4,7 +4,7 @@ require 'savon'
 
 module FmTimbradoCfdi
   class FmRespuestaCancelacion
-    attr_reader :errors, :pdf, :xml, :cbb, :timbre, :no_csd_emisor
+    attr_reader :errors
     def initialize(savon_response)
       @respuesta = savon_response
       if not valid?

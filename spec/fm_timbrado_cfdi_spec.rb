@@ -131,12 +131,12 @@ describe FmTimbradoCfdi do
   describe ".cancelar" do
     context "petición inválida" do
       let(:respuesta){ FmTimbradoCfdi.cancelar('ESI920427886', 'asdasasdsa') }
-      it{ expect(respuesta.success?).to eq(false) }
+      it{ expect(respuesta.valid?).to eq(false) }
     end
 
     context "formato válido" do
       let(:respuesta){ FmTimbradoCfdi.cancelar('ESI920427886', '00000000-0000-0000-0000-00000000000000') }
-      it{ expect(respuesta.success?).to eq(false) }
+      it{ expect(respuesta.valid?).to eq(false) }
     end
 
     context "peticion válida" do
@@ -147,7 +147,7 @@ describe FmTimbradoCfdi do
         respuesta.timbre.uuid
       end
       let(:respuesta){ FmTimbradoCfdi.cancelar('ESI920427886', uuid) }
-      it{ expect(respuesta.success?).to eq(true) }
+      it{ expect(respuesta.valid?).to eq(true) }
     end
   end
 
