@@ -12,5 +12,6 @@ describe FmTimbradoCfdi::FmTimbre do
     it { timbre.uuid.should_not be_nil }
     it { timbre.sello_sat.should_not be_nil }
     it { timbre.sello_cfd.should_not be_nil }
+    it { timbre.cadena_original.should_not be_nil }
   end
 end

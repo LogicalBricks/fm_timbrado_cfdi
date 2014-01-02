@@ -4,12 +4,12 @@ require 'savon'
 
 module FmTimbradoCfdi
   class FmRespuestaCancelacion
-    attr_reader :errors
+    attr_reader :error
     def initialize(savon_response)
       @respuesta = savon_response
-      if not valid?
+      unless valid?
         #@error = @respuesta.http_error.to_s if @respuesta.http_error?
-        @error = @respuesta.soap_fault.to_s if @respuesta.soap_fault?
+        @error = @respuesta.to_s if @respuesta.soap_fault?
       end
     end
 

@@ -3,7 +3,7 @@ require 'nokogiri'
 
 module FmTimbradoCfdi
   class FmTimbre
-    attr_reader :no_certificado_sat, :fecha_timbrado, :uuid, :sello_sat, :sello_cfd, :fecha_comprobante, :serie, :folio, :trans_id
+    attr_reader :no_certificado_sat, :no_certificado, :fecha_timbrado, :uuid, :sello_sat, :sello_cfd, :fecha_comprobante, :serie, :folio, :trans_id, :version
 
     def initialize ( nodo_timbre )
       parse( nodo_timbre )
@@ -15,6 +15,10 @@ module FmTimbradoCfdi
       atributos.each do |variable|
         instance_variable_set("@#{variable}", send("obtener_#{variable}", xml, ns))
       end
+    end
+
+    def cadena_original
+      "||#{version}|#{uuid}|#{fecha_timbrado}|#{sello_cfd}|#{no_certificado_sat}||"
     end
 
     private
@@ -30,7 +34,9 @@ module FmTimbradoCfdi
 
     def atributos
       [ 'trans_id',
+        'version',
         'no_certificado_sat',
+        'no_certificado',
         'fecha_timbrado',
         'uuid',
         'sello_sat',
@@ -38,6 +44,18 @@ module FmTimbradoCfdi
         'fecha_comprobante',
         'serie',
         'folio' ]
+    end
+
+    def obtener_version(xml,ns)
+      xml.xpath("//tfd:TimbreFiscalDigital", ns).attribute('version').value rescue nil
+    end
+
+    def obtener_no_certificado(xml,ns)
+      xml.xpath("//cfdi:Comprobante",ns).attribute('noCertificado').value rescue nil
+    end
+
+    def obtener_trans_id(xml,ns)
+      xml.xpath("//cfdi:Comprobante",ns).attribute('TransID').value rescue nil
     end
 
     def obtener_trans_id(xml,ns)
