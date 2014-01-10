@@ -25,52 +25,34 @@ module FmTimbradoCfdi
     def timbrar(rfc, documento, opciones={})
       text_to_cfdi = Base64::encode64( documento )
       # Realizamos la peticion
-      configurar_cliente
-      response = @client.call(:request_timbrar_cfdi,
-                              message:
-                              { "param0" => {
-                                "UserPass" => user_pass,
-                                "UserID" => user_id,
-                                "emisorRFC" => rfc,
-                                "text2CFDI" => text_to_cfdi,
-                              }.merge(opciones)
-                              }
-                             )
-      FmRespuesta.new(response)
+      respuesta = webservice_call(:request_timbrar_cfdi, rfc, {"text2CFDI" => text_to_cfdi}.merge(opciones))
+      FmRespuesta.new(respuesta)
     end
 
     def subir_certificado(rfc, certificado, llave, password, opciones = {})
-      configurar_cliente
-      respuesta = @client.call(:activar_cancelacion,
-                   message:
-                   { "param0" => {
-                     "UserPass" => user_pass,
-                     "UserID" => user_id,
-                     "emisorRFC" => rfc,
-                     "archivoCer" => Base64::encode64(certificado),
+      parametros = { "archivoCer" => Base64::encode64(certificado),
                      "archivoKey" => Base64::encode64(llave),
-                     "clave" => password,
-                   }.merge(opciones)
-                   })
+                     "clave" => password }
+      respuesta = webservice_call(:activar_cancelacion, rfc, parametros.merge(opciones))
       FmRespuestaCancelacion.new(respuesta)
     end
 
     def cancelar(rfc, uuid, opciones = {})
-      configurar_cliente
-      respuesta = @client.call(:request_cancelar_cfdi,
-                   message:
-                   { "param0" => {
-                     "UserPass" => user_pass,
-                     "UserID" => user_id,
-                     "emisorRFC" => rfc,
-                     "uuid" => uuid,
-                   }.merge(opciones)
-                   })
+      respuesta = webservice_call(:request_cancelar_cfdi, rfc, {uuid: uuid}.merge(opciones))
       FmRespuestaCancelacion.new(respuesta)
     end
 
 
     private
+
+    def webservice_call(accion, rfc, opciones)
+      configurar_cliente
+      parametros= { "param0" => { "UserPass" => user_pass, "UserID" => user_id, "emisorRFC" => rfc }.merge(opciones) }
+      @client.call(accion,
+                   message: parametros
+                   )
+    end
+
     def configurar_cliente
       @client  = Savon.client(
         ssl_verify_mode: ssl_verify_mode,
