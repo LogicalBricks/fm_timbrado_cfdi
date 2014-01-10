@@ -5,21 +5,22 @@ require 'fm_timbrado_cfdi/fm_timbre'
 
 module FmTimbradoCfdi
   class FmRespuesta
-    attr_reader :errors, :pdf, :xml, :cbb, :timbre, :no_csd_emisor
-    def initialize(savon_response)
-      parse(savon_response)
+    attr_reader :errors, :pdf, :xml, :cbb, :timbre, :no_csd_emisor, :raw
+    def initialize(response)
+      @errors = []
+      if response.is_a? String
+        @raw = response
+        procesar_respuesta(response)
+      else
+        parse_savon(response)
+      end
     end
 
-    def parse (savon_response)
-      @errors = []
+    def parse_savon (savon_response)
       begin
         if savon_response.success? then
-          @doc = Nokogiri::XML(savon_response.to_xml)
-          @xml = obtener_xml(@doc)
-          @no_csd_emisor = obtener_no_csd_emisor(@xml) if @xml
-          @timbre = obtener_timbre(@xml)
-          @pdf = obtener_pdf(@doc)
-          @cbb = obtener_cbb(@doc)
+          @raw = savon_response.to_xml
+          procesar_respuesta(savon_response.to_xml)
         else
           @errors << savon_response.soap_fault.to_s if savon_response.soap_fault?
           @doc = @xml = @no_csd_emisor = @timbre = @pdf = @cbb = nil
@@ -59,6 +60,15 @@ module FmTimbradoCfdi
     alias :no_csd_emisor_present? :no_csd_emisor?
 
     private
+
+    def procesar_respuesta(respuesta_xml)
+      @doc = Nokogiri::XML(respuesta_xml)
+      @xml = obtener_xml(@doc)
+      @no_csd_emisor = obtener_no_csd_emisor(@xml) if @xml
+      @timbre = obtener_timbre(@xml)
+      @pdf = obtener_pdf(@doc)
+      @cbb = obtener_cbb(@doc)
+    end
 
     def obtener_xml(doc)
       unless doc.xpath("//xml").empty? then
