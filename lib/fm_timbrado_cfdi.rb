@@ -1,5 +1,6 @@
 require "fm_timbrado_cfdi/version"
 require "fm_timbrado_cfdi/fm_cliente"
+require "fm_timbrado_cfdi/fm_informacion_cfdi"
 require 'nokogiri'
 require 'base64'
 
