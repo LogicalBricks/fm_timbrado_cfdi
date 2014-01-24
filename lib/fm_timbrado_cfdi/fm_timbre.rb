@@ -1,36 +1,17 @@
 # -*- encoding : utf-8 -*-
 require 'nokogiri'
+require 'fm_timbrado_cfdi/fm_cfdi_parser'
 
 module FmTimbradoCfdi
-  class FmTimbre
+  class FmTimbre < FmCfdiParser
     attr_reader :no_certificado_sat, :no_certificado, :fecha_timbrado, :uuid, :sello_sat, :sello_cfd, :fecha_comprobante, :serie, :folio, :trans_id, :version
 
-    def initialize ( nodo_timbre )
-      parse( nodo_timbre )
-    end
-
-    def parse ( nodo_timbre )
-      xml = Nokogiri::XML(nodo_timbre)
-      ns = generar_namespaces(xml)
-      atributos.each do |variable|
-        instance_variable_set("@#{variable}", send("obtener_#{variable}", xml, ns))
-      end
-    end
 
     def cadena_original
       "||#{version}|#{uuid}|#{fecha_timbrado}|#{sello_cfd}|#{no_certificado_sat}||"
     end
 
     private
-
-    def generar_namespaces(xml)
-      namespaces = xml.collect_namespaces
-      ns = {}
-      namespaces.each_pair do |key, value|
-        ns[key.sub(/^xmlns:/, '')] = value
-      end
-      ns
-    end
 
     def atributos
       [ 'trans_id',

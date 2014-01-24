@@ -1,23 +1,12 @@
 # -*- encoding : utf-8 -*-
 require 'nokogiri'
+require 'fm_timbrado_cfdi/fm_cfdi_parser'
 
 module FmTimbradoCfdi
-  class FmInformacionCfdi
+  class FmInformacionCfdi < FmCfdiParser
     attr_reader :total, :subtotal, :descuento
 
-    def initialize ( nodo_timbre )
-      parse( nodo_timbre )
-    end
-
 private
-     def parse ( nodo_timbre )
-      xml = Nokogiri::XML(nodo_timbre)
-      ns = generar_namespaces(xml)
-      atributos.each do |variable|
-        instance_variable_set("@#{variable}", send("obtener_#{variable}", xml, ns))
-      end
-    end
-
     def atributos
       [ 'total',
         'subtotal',
@@ -37,14 +26,6 @@ private
       xml.xpath("//cfdi:Comprobante",ns).attribute('descuento').value rescue nil
     end
 
-    def generar_namespaces(xml)
-      namespaces = xml.collect_namespaces
-      ns = {}
-      namespaces.each_pair do |key, value|
-        ns[key.sub(/^xmlns:/, '')] = value
-      end
-      ns
-    end
 
   end
 end
