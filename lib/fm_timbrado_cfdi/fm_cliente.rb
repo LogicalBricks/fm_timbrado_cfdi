@@ -54,13 +54,15 @@ module FmTimbradoCfdi
     end
 
     def configurar_cliente
-      @client  = Savon.client(
+      @client = Savon.client(
         ssl_verify_mode: ssl_verify_mode,
         wsdl: fm_wsdl,
         endpoint: endpoint,
         raise_errors: false,
         log_level: log_level,
-        log: log
+        log: log,
+        open_timeout: 15,
+        read_timeout: 15
       )
     end
 
