@@ -4,7 +4,7 @@ require 'fm_timbrado_cfdi/fm_respuesta_cancelacion'
 
 module FmTimbradoCfdi
   class FmCliente
-    attr_accessor :user_id, :user_pass, :namespace, :fm_wsdl, :endpoint, :ssl_verify_mode, :log, :log_level
+    attr_accessor :user_id, :user_pass, :namespace, :fm_wsdl, :endpoint, :ssl_verify_mode, :log, :log_level, :logger
 
     def initialize
       # La configuracion por default es la del ambiente de pruebas de FM
@@ -20,6 +20,7 @@ module FmTimbradoCfdi
       @log = false
       @log_level = :error
       @ssl_verify_mode = :none
+      @logger = nil
     end
 
     def timbrar(rfc, documento, opciones={})
@@ -54,16 +55,17 @@ module FmTimbradoCfdi
     end
 
     def configurar_cliente
-      @client = Savon.client(
-        ssl_verify_mode: ssl_verify_mode,
-        wsdl: fm_wsdl,
-        endpoint: endpoint,
-        raise_errors: false,
-        log_level: log_level,
-        log: log,
-        open_timeout: 15,
-        read_timeout: 15
-      )
+      @client = Savon.client do |globals|
+        globals.ssl_verify_mode ssl_verify_mode
+        globals.wsdl            fm_wsdl
+        globals.endpoint        endpoint
+        globals.raise_errors    false
+        globals.log_level       log_level
+        globals.log             log
+        globals.logger          logger if logger
+        globals.open_timeout    15
+        globals.read_timeout    15
+      end
     end
 
   end
