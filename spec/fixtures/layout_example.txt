@@ -1,69 +1,13 @@
-[ComprobanteFiscalDigital]
-Version=3.3
-Serie=A
-Folio=01
-Fecha=--fecha-comprobante--
-FormaPago=03
-CondicionesDePago=CONTADO
-SubTotal=1850.00
-Descuento=175.00
-Moneda=MXN
-Total=1943.00
-TipoDeComprobante=I
-MetodoPago=PUE
-LugarExpedicion=68050
-
-[DatosAdicionales]
-tipoDocumento=FACTURA
-observaciones=Observaciones al documento versión 3.3
-platillaPDF=clasic
-
-[Emisor]
-Rfc=ESI920427886
-Nombre=FACTURACION MODERNA SA DE CV
-RegimenFiscal=601
-
-[Receptor]
-Rfc=AAQM610917QJA
-Nombre=PUBLICO EN GENERAL
-UsoCFDI=G01
-
-[Concepto#1]
-ClaveProdServ=01010101
-NoIdentificacion=AULOG001
-Cantidad=5
-ClaveUnidad=H87
-Unidad=Pieza
-Descripcion=Aurriculares USB Logitech
-ValorUnitario=350.00
-Importe=1750.00
-Descuento=175.00
-
-Impuestos.Traslados.Base=[1575.00]
-Impuestos.Traslados.Impuesto=[002]
-Impuestos.Traslados.TipoFactor=[Tasa]
-Impuestos.Traslados.TasaOCuota=[0.160000]
-Impuestos.Traslados.Importe=[252.00]
-
-[Concepto#2]
-ClaveProdServ=43201800
-NoIdentificacion=USB
-Cantidad=1
-ClaveUnidad=H87
-Unidad=Pieza
-Descripcion=Memoria USB 32gb marca Kingston
-ValorUnitario=100.00
-Importe=100.00
-
-Impuestos.Traslados.Base=[100.00]
-Impuestos.Traslados.Impuesto=[002]
-Impuestos.Traslados.TipoFactor=[Tasa]
-Impuestos.Traslados.TasaOCuota=[0.160000]
-Impuestos.Traslados.Importe=[16.00]
-
-[Traslados]
-TotalImpuestosTrasladados=268.00
-Impuesto=[002]
-TipoFactor=[Tasa]
-TasaOCuota=[0.160000]
-Importe=[268.00]
+A1|101|--fecha-comprobante--|San Pedro Garza García|ingreso|Contado|Efectivo|Pago en una sola Exhibición|0009 - Banamex|100.00|0.00|116.00|MXN|0.00||
+ESI920427886|COMERCIALIZADORA SA DE CV|PERSONA MORAL REGIMEN GENERAL DE LEY.
+Calzada del Valle|90|int-10|Col. Del Valle||San Pedro Garza Garcia.|Nuevo León|México|76888
+Calzada del Valle(Sucursal)|90|int-10|Col. Del Valle||San Pedro Garza Garcia.|Nuevo León|México|76888
+XAXX010101000|PUBLICO EN GENERAL
+Calle|Num Ext|Num Int|Colonia||Municipio|Estado|Pais|60000
+CONCEPTOS|2
+7899701|Pieza|Caja de Chocolates|1.00|50.00|50.00
+|No aplica|Envio|1.00|50.00|50.00
+IMPUESTOS_TRASLADADOS|1
+IVA|16.00|16.00
+IMPUESTOS_RETENIDOS|1
+ISR|200.00

@@ -98,11 +98,7 @@ module FmTimbradoCfdi
     def obtener_no_csd_emisor(xml)
       begin
         factura_xml = Nokogiri::XML(xml)
-        if xml =~ /version=\"3.2/
-          factura_xml.xpath("//cfdi:Comprobante").attribute('noCertificado').value
-        else
-          factura_xml.xpath("//cfdi:Comprobante").attribute('NoCertificado').value
-        end
+        factura_xml.xpath("//cfdi:Comprobante").attribute('noCertificado').value
       rescue Exception => e
         @errors << "No se ha podido obtener el CSD del emisor"
         nil

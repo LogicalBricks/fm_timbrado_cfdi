@@ -15,15 +15,15 @@ private
     end
 
     def obtener_total(xml,ns)
-      xml.xpath("//cfdi:Comprobante",ns).attribute('Total').value rescue nil
+      xml.xpath("//cfdi:Comprobante",ns).attribute('total').value rescue nil
     end
 
     def obtener_subtotal(xml,ns)
-      xml.xpath("//cfdi:Comprobante",ns).attribute('SubTotal').value rescue nil
+      xml.xpath("//cfdi:Comprobante",ns).attribute('subTotal').value rescue nil
     end
 
     def obtener_descuento(xml,ns)
-      xml.xpath("//cfdi:Comprobante",ns).attribute('Descuento').value rescue nil
+      xml.xpath("//cfdi:Comprobante",ns).attribute('descuento').value rescue nil
     end
 
 
