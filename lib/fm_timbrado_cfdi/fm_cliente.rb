@@ -1,5 +1,6 @@
 require 'savon'
 require 'fm_timbrado_cfdi/fm_respuesta'
+require 'fm_timbrado_cfdi/fm_respuesta3_3'
 require 'fm_timbrado_cfdi/fm_respuesta_cancelacion'
 
 module FmTimbradoCfdi
@@ -28,6 +29,13 @@ module FmTimbradoCfdi
       # Realizamos la peticion
       respuesta = webservice_call(:request_timbrar_cfdi, rfc, {"text2CFDI" => text_to_cfdi}.merge(opciones))
       FmRespuesta.new(respuesta)
+    end
+
+    def timbrar3_3(rfc, documento, opciones={})
+      text_to_cfdi = Base64::encode64( documento )
+      # Realizamos la peticion
+      respuesta = webservice_call(:request_timbrar_cfdi, rfc, {"text2CFDI" => text_to_cfdi}.merge(opciones))
+      FmRespuesta3_3.new(respuesta)
     end
 
     def subir_certificado(rfc, certificado, llave, password, opciones = {})

@@ -98,6 +98,47 @@ describe FmTimbradoCfdi do
     end
   end
 
+  describe ".timbrar" do
+    context "timbrado correcto" do
+      context 'archivo de prueba simple' do
+        let(:plantilla){File.open('spec/fixtures/layout_example3_3.txt').read}
+        let(:layout){ plantilla.gsub('--fecha-comprobante--', 'asignarFecha' )}
+        let(:respuesta){ FmTimbradoCfdi.timbrar3_3 'ESI920427886', layout }
+        it { respuesta.should be_valid }
+        it { respuesta.should be_xml }
+
+        context "formato cbb" do
+          let(:respuesta){ FmTimbradoCfdi.timbrar3_3 'ESI920427886', layout, 'generarCBB' => true }
+          it { respuesta.should be_valid }
+          it { respuesta.should be_xml }
+          it { respuesta.should be_cbb }
+        end
+
+        context "formato txt" do
+          let(:respuesta){ FmTimbradoCfdi.timbrar3_3 'ESI920427886', layout, 'generarTXT' => true }
+          it { respuesta.should be_valid }
+          it { respuesta.should be_xml }
+          it { respuesta.should be_timbre }
+        end
+
+        context "formato pdf" do
+          let(:respuesta){ FmTimbradoCfdi.timbrar3_3 'ESI920427886', layout, 'generarPDF' => true }
+          it { respuesta.should be_valid }
+          it { respuesta.should be_xml }
+          it { respuesta.should be_pdf }
+        end
+
+        context "formato pdf, pero no cbb, ni txt" do
+          let(:respuesta){ FmTimbradoCfdi.timbrar3_3 'ESI920427886', layout, 'generarPDF' => true, 'generarCBB' => false, 'generarTXT' => false }
+          it { respuesta.should be_valid }
+          it { respuesta.should be_xml }
+          it { respuesta.should be_pdf }
+          it { respuesta.should_not be_cbb }
+        end
+      end
+    end
+  end
+
   context 'subir certificados' do
     let(:archivo_certificado) { File.read('spec/fixtures/certificados/20001000000200000192.cer') }
     let(:archivo_llave) { File.read('spec/fixtures/certificados/20001000000200000192.key') }
