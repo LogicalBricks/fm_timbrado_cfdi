@@ -13,5 +13,6 @@ describe FmTimbradoCfdi::FmTimbre3_3 do
     it { timbre.sello_sat.should_not be_nil }
     it { timbre.sello_cfd.should_not be_nil }
     it { timbre.cadena_original.should_not be_nil }
+    it { timbre.rfc_provedor_certificado.should_not be_nil }
   end
 end

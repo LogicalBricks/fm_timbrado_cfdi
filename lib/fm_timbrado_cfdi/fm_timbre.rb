@@ -4,7 +4,8 @@ require 'fm_timbrado_cfdi/fm_cfdi_parser'
 
 module FmTimbradoCfdi
   class FmTimbre < FmCfdiParser
-    attr_reader :no_certificado_sat, :no_certificado, :fecha_timbrado, :uuid, :sello_sat, :sello_cfd, :fecha_comprobante, :serie, :folio, :trans_id, :version
+    attr_reader :no_certificado_sat, :no_certificado, :fecha_timbrado, :uuid, :sello_sat, :sello_cfd,
+      :fecha_comprobante, :serie, :folio, :trans_id, :version, :rfc_provedor_certificado
 
 
     def cadena_original
@@ -24,6 +25,7 @@ module FmTimbradoCfdi
         'sello_cfd',
         'fecha_comprobante',
         'serie',
+        'rfc_provedor_certificado',
         'folio' ]
     end
 
@@ -73,6 +75,9 @@ module FmTimbradoCfdi
 
     def obtener_folio(xml, ns)
       xml.xpath("//cfdi:Comprobante", ns).attribute('folio').value rescue nil
+    end
+
+    def obtener_rfc_provedor_certificado(xml, ns)
     end
   end
 end
