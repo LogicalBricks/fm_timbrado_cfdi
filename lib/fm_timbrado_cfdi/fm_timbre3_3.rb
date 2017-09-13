@@ -34,7 +34,7 @@ module FmTimbradoCfdi
       xml.xpath("//cfdi:Comprobante", ns).attribute('Folio').value rescue nil
     end
 
-    def obtener_rfc_provedor_certificado(xml, ns)
+    def obtener_rfc_provedor_certificacion(xml, ns)
       xml.xpath("//tfd:TimbreFiscalDigital", ns).attribute('RfcProvCertif').value rescue nil
     end
   end
