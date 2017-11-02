@@ -1,16 +1,16 @@
 # encoding: utf-8
 require 'spec_helper'
-require 'ostruct'
 
 describe FmTimbradoCfdi::FmRespuesta3_3 do
   context "respuesta no satisfactoria" do
-    let(:respuesta_cliente) do
-      prueba = OpenStruct.new
-      prueba.stub(:success?).and_return(false)
-      prueba.stub_chain(:soap_fault?).and_return(true)
-      prueba.stub_chain(:soap_fault, :to_s).and_return('Test Error')
-      prueba
+    let(:respuesta_cliente) { double }
+
+    before :each do
+      allow(respuesta_cliente).to receive(:success?).and_return false
+      allow(respuesta_cliente).to receive(:soap_fault?).and_return true
+      allow(respuesta_cliente).to receive_message_chain(:soap_fault, :to_s).and_return 'Test Error'
     end
+
     let(:respuesta) { FmTimbradoCfdi::FmRespuesta3_3.new(respuesta_cliente) }
     it { expect(respuesta.valid?).to eq(false) }
     it { expect(respuesta.xml?).to eq(false) }

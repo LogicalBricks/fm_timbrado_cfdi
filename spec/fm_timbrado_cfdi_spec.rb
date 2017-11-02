@@ -4,11 +4,11 @@ require 'spec_helper'
 describe FmTimbradoCfdi do
   describe ".cliente" do
     it "Por default el cliente debe cargar la configuración del ambiente de pruebas" do
-      FmTimbradoCfdi.cliente.user_id.should == 'UsuarioPruebasWS'
-      FmTimbradoCfdi.cliente.user_pass.should == 'b9ec2afa3361a59af4b4d102d3f704eabdf097d4'
-      FmTimbradoCfdi.cliente.namespace.should == 'https://t2demo.facturacionmoderna.com/timbrado/soap'
-      FmTimbradoCfdi.cliente.endpoint.should == 'https://t2demo.facturacionmoderna.com/timbrado/soap'
-      FmTimbradoCfdi.cliente.fm_wsdl.should == 'https://t2demo.facturacionmoderna.com/timbrado/wsdl'
+      expect(FmTimbradoCfdi.cliente.user_id).to eq 'UsuarioPruebasWS'
+      expect(FmTimbradoCfdi.cliente.user_pass).to eq 'b9ec2afa3361a59af4b4d102d3f704eabdf097d4'
+      expect(FmTimbradoCfdi.cliente.namespace).to eq 'https://t2demo.facturacionmoderna.com/timbrado/soap'
+      expect(FmTimbradoCfdi.cliente.endpoint).to eq 'https://t2demo.facturacionmoderna.com/timbrado/soap'
+      expect(FmTimbradoCfdi.cliente.fm_wsdl).to eq 'https://t2demo.facturacionmoderna.com/timbrado/wsdl'
     end
   end
 
@@ -19,14 +19,14 @@ describe FmTimbradoCfdi do
         let(:plantilla){File.open('spec/fixtures/layout_example.txt').read}
         let(:layout){ plantilla.gsub('--fecha-comprobante--', 'asignarFecha' )}
         let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout }
-        it { respuesta.should be_valid }
-        it { respuesta.should be_xml }
+        it { expect(respuesta).to be_valid }
+        it { expect(respuesta).to be_xml }
 
         context "formato cbb" do
           let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout, true}
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_cbb }
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_cbb }
         end
      end
     end
@@ -35,8 +35,8 @@ describe FmTimbradoCfdi do
       let(:plantilla){File.open('spec/fixtures/constructora_layout_example.txt').read}
       let(:layout){plantilla.gsub('--fecha-comprobante--', 'asignarFecha')}
       let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout }
-      it { respuesta.should be_valid }
-      it { respuesta.should be_xml }
+      it { expect(respuesta).to be_valid }
+      it { expect(respuesta).to be_xml }
     end
   end
 
@@ -46,36 +46,36 @@ describe FmTimbradoCfdi do
         let(:plantilla){File.open('spec/fixtures/layout_example.txt').read}
         let(:layout){ plantilla.gsub('--fecha-comprobante--', 'asignarFecha' )}
         let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout }
-        it { respuesta.should be_valid }
-        it { respuesta.should be_xml }
+        it { expect(respuesta).to be_valid }
+        it { expect(respuesta).to be_xml }
 
         context "formato cbb" do
           let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarCBB' => true }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_cbb }
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_cbb }
         end
 
         context "formato txt" do
           let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarTXT' => true }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_timbre }
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_timbre }
         end
 
         context "formato pdf" do
           let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarPDF' => true }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_pdf }
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_pdf }
         end
 
         context "formato pdf, pero no cbb, ni txt" do
           let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarPDF' => true, 'generarCBB' => false, 'generarTXT' => false }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_pdf }
-          it { respuesta.should_not be_cbb }
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_pdf }
+          it { expect(respuesta).to_not be_cbb }
         end
       end
     end
@@ -84,8 +84,8 @@ describe FmTimbradoCfdi do
       let(:plantilla){File.open('spec/fixtures/constructora_layout_example.txt').read}
       let(:layout){plantilla.gsub('--fecha-comprobante--', 'asignarFecha')}
       let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout }
-      it { respuesta.should be_valid }
-      it { respuesta.should be_xml }
+      it { expect(respuesta).to be_valid }
+      it { expect(respuesta).to be_xml }
     end
   end
 
@@ -94,7 +94,7 @@ describe FmTimbradoCfdi do
       fecha_comprobante = Time.now - 120*3600
       layout = File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', fecha_comprobante.strftime("%FT%T"))
       respuesta = FmTimbradoCfdi.timbrar 'ESI920427886', layout
-      respuesta.should_not be_valid
+      expect(respuesta).to_not be_valid
     end
   end
 
@@ -104,36 +104,36 @@ describe FmTimbradoCfdi do
         let(:plantilla){File.open('spec/fixtures/layout_example3_3.txt').read}
         let(:layout){ plantilla.gsub('--fecha-comprobante--', 'asignarFecha' )}
         let(:respuesta){ FmTimbradoCfdi.timbrar3_3 'ESI920427886', layout }
-        it { respuesta.should be_valid }
-        it { respuesta.should be_xml }
+        it { expect(respuesta).to be_valid }
+        it { expect(respuesta).to be_xml }
 
         context "formato cbb" do
           let(:respuesta){ FmTimbradoCfdi.timbrar3_3 'ESI920427886', layout, 'generarCBB' => true }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_cbb }
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_cbb }
         end
 
         context "formato txt" do
           let(:respuesta){ FmTimbradoCfdi.timbrar3_3 'ESI920427886', layout, 'generarTXT' => true }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_timbre }
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_timbre }
         end
 
         context "formato pdf" do
           let(:respuesta){ FmTimbradoCfdi.timbrar3_3 'ESI920427886', layout, 'generarPDF' => true }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_pdf }
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_pdf }
         end
 
         context "formato pdf, pero no cbb, ni txt" do
           let(:respuesta){ FmTimbradoCfdi.timbrar3_3 'ESI920427886', layout, 'generarPDF' => true, 'generarCBB' => false, 'generarTXT' => false }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_pdf }
-          it { respuesta.should_not be_cbb }
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_pdf }
+          it { expect(respuesta).to_not be_cbb }
         end
       end
     end
@@ -202,11 +202,11 @@ describe FmTimbradoCfdi do
         config.fm_wsdl = "http://logicalbricks.com/wsdl"
       end
 
-      FmTimbradoCfdi.cliente.user_id.should == 'mi_usuario'
-      FmTimbradoCfdi.cliente.user_pass.should == 'secret'
-      FmTimbradoCfdi.cliente.namespace.should == 'http://logicalbricks.com/soap'
-      FmTimbradoCfdi.cliente.endpoint.should == 'http://logicalbricks.com/endpoint'
-      FmTimbradoCfdi.cliente.fm_wsdl.should == 'http://logicalbricks.com/wsdl'
+      expect(FmTimbradoCfdi.cliente.user_id).to eq 'mi_usuario'
+      expect(FmTimbradoCfdi.cliente.user_pass).to eq 'secret'
+      expect(FmTimbradoCfdi.cliente.namespace).to eq 'http://logicalbricks.com/soap'
+      expect(FmTimbradoCfdi.cliente.endpoint).to eq 'http://logicalbricks.com/endpoint'
+      expect(FmTimbradoCfdi.cliente.fm_wsdl).to eq 'http://logicalbricks.com/wsdl'
     end
   end
 

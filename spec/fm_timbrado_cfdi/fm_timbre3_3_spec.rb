@@ -7,12 +7,12 @@ describe FmTimbradoCfdi::FmTimbre3_3 do
     let(:layout){ plantilla.gsub('--fecha-comprobante--', 'asignarFecha' )}
     let(:respuesta){ FmTimbradoCfdi.timbrar3_3 'ESI920427886', layout }
     let(:timbre) { FmTimbradoCfdi::FmTimbre3_3.new(respuesta.xml)}
-    it { timbre.no_certificado_sat.should_not be_nil }
-    it { timbre.fecha_timbrado.should_not be_nil }
-    it { timbre.uuid.should_not be_nil }
-    it { timbre.sello_sat.should_not be_nil }
-    it { timbre.sello_cfd.should_not be_nil }
-    it { timbre.cadena_original.should_not be_nil }
-    it { timbre.rfc_provedor_certificacion.should_not be_nil }
+    it { expect(timbre.no_certificado_sat).to_not be_nil }
+    it { expect(timbre.fecha_timbrado).to_not be_nil }
+    it { expect(timbre.uuid).to_not be_nil }
+    it { expect(timbre.sello_sat).to_not be_nil }
+    it { expect(timbre.sello_cfd).to_not be_nil }
+    it { expect(timbre.cadena_original).to_not be_nil }
+    it { expect(timbre.rfc_provedor_certificacion).to_not be_nil }
   end
 end
