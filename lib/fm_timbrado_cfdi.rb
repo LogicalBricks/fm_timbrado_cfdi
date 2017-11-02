@@ -3,6 +3,7 @@ require "fm_timbrado_cfdi/fm_cliente"
 require "fm_timbrado_cfdi/fm_respuesta3_3"
 require "fm_timbrado_cfdi/fm_timbre3_3"
 require "fm_timbrado_cfdi/fm_informacion_cfdi"
+require "fm_timbrado_cfdi/fm_informacion_cfdi3_3"
 require "fm_timbrado_cfdi/fm_cfdi"
 require 'nokogiri'
 require 'base64'
