@@ -1,9 +1,6 @@
 require "fm_timbrado_cfdi/version"
 require "fm_timbrado_cfdi/fm_cliente"
-require "fm_timbrado_cfdi/fm_respuesta3_3"
-require "fm_timbrado_cfdi/fm_timbre3_3"
 require "fm_timbrado_cfdi/fm_informacion_cfdi"
-require "fm_timbrado_cfdi/fm_informacion_cfdi3_3"
 require "fm_timbrado_cfdi/fm_cfdi"
 require 'nokogiri'
 require 'base64'
@@ -53,10 +50,6 @@ module FmTimbradoCfdi
   # Regresa un objeto tipo FMRespuesta que contiene el xml certificado, el timbre y la representación en pdf o el cbb en png
   def timbrar (rfc, archivo, opciones= {})
     cliente.timbrar rfc, archivo, opciones
-  end
-
-  def timbrar3_3 (rfc, archivo, opciones= {})
-    cliente.timbrar3_3 rfc, archivo, opciones
   end
 
   # Public: Envía CSD para que lo almacene el PAC

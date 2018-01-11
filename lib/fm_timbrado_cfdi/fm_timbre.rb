@@ -30,15 +30,11 @@ module FmTimbradoCfdi
     end
 
     def obtener_version(xml,ns)
-      xml.xpath("//tfd:TimbreFiscalDigital", ns).attribute('version').value rescue nil
+      xml.xpath("//tfd:TimbreFiscalDigital", ns).attribute('Version').value rescue nil
     end
 
     def obtener_no_certificado(xml,ns)
-      xml.xpath("//cfdi:Comprobante",ns).attribute('noCertificado').value rescue nil
-    end
-
-    def obtener_trans_id(xml,ns)
-      xml.xpath("//cfdi:Comprobante",ns).attribute('TransID').value rescue nil
+      xml.xpath("//cfdi:Comprobante",ns).attribute('NoCertificado').value rescue nil
     end
 
     def obtener_trans_id(xml,ns)
@@ -46,7 +42,7 @@ module FmTimbradoCfdi
     end
 
     def obtener_no_certificado_sat(xml, ns)
-      xml.xpath("//tfd:TimbreFiscalDigital", ns).attribute('noCertificadoSAT').value rescue nil
+      xml.xpath("//tfd:TimbreFiscalDigital", ns).attribute('NoCertificadoSAT').value rescue nil
     end
 
     def obtener_uuid(xml,ns)
@@ -58,27 +54,27 @@ module FmTimbradoCfdi
     end
 
     def obtener_sello_sat(xml, ns)
-      xml.xpath("//tfd:TimbreFiscalDigital", ns).attribute('selloSAT').value rescue nil
+      xml.xpath("//tfd:TimbreFiscalDigital", ns).attribute('SelloSAT').value rescue nil
     end
 
     def obtener_fecha_comprobante(xml, ns)
-      xml.xpath("//cfdi:Comprobante", ns).attribute('fecha').value rescue nil
+      xml.xpath("//cfdi:Comprobante", ns).attribute('Fecha').value rescue nil
     end
 
     def obtener_sello_cfd(xml, ns)
-      xml.xpath("//tfd:TimbreFiscalDigital", ns).attribute('selloCFD').value rescue nil
+      xml.xpath("//tfd:TimbreFiscalDigital", ns).attribute('SelloCFD').value rescue nil
     end
 
     def obtener_serie(xml, ns )
-      xml.xpath("//cfdi:Comprobante", ns).attribute('serie').value rescue nil
+      xml.xpath("//cfdi:Comprobante", ns).attribute('Serie').value rescue nil
     end
 
     def obtener_folio(xml, ns)
-      xml.xpath("//cfdi:Comprobante", ns).attribute('folio').value rescue nil
+      xml.xpath("//cfdi:Comprobante", ns).attribute('Folio').value rescue nil
     end
 
     def obtener_rfc_provedor_certificacion(xml, ns)
+      xml.xpath("//tfd:TimbreFiscalDigital", ns).attribute('RfcProvCertif').value rescue nil
     end
   end
 end
-
