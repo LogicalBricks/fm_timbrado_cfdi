@@ -71,12 +71,13 @@ module FmTimbradoCfdi
     end
 
     def obtener_xml(doc)
-      unless doc.xpath("//xml").empty? then
-        Base64::decode64 doc.xpath("//xml")[0].content
-      else
-        @errors << "No se ha encontrado el nodo xml"
-        nil
-      end
+      return sin_nodo_xml if doc.xpath('//xml').empty?
+      Base64::decode64 doc.xpath('//xml')[0].content
+    end
+
+    def sin_nodo_xml
+      @errors << 'No se ha encontrado el nodo xml'
+      nil
     end
 
     def obtener_timbre(xml)
@@ -84,23 +85,23 @@ module FmTimbradoCfdi
     end
 
     def obtener_pdf(doc)
-      unless doc.xpath("//pdf").empty?
-        Base64::decode64 doc.xpath("//pdf")[0].content
+      unless doc.xpath('//pdf').empty?
+        Base64::decode64 doc.xpath('//pdf')[0].content
       end
     end
 
     def obtener_cbb(doc)
-      unless doc.xpath("//png").empty?
-        Base64::decode64 doc.xpath("//png")[0].content
+      unless doc.xpath('//png').empty?
+        Base64::decode64 doc.xpath('//png')[0].content
       end
     end
 
     def obtener_no_csd_emisor(xml)
-      begin
-        factura_xml = Nokogiri::XML(xml)
-        factura_xml.xpath("//cfdi:Comprobante").attribute('NoCertificado').value
-      rescue Exception => e
-        @errors << "No se ha podido obtener el CSD del emisor"
+      factura_xml = Nokogiri::XML(xml)
+      if factura_xml.xpath('//cfdi:Comprobante').attribute('NoCertificado')
+        factura_xml.xpath('//cfdi:Comprobante').attribute('NoCertificado').value
+      else
+        @errors << 'No se ha podido obtener el CSD del emisor'
         nil
       end
     end

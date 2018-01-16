@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe FmTimbradoCfdi::FmRespuesta do
-  context "respuesta no satisfactoria" do
+  context 'respuesta no satisfactoria' do
     let(:respuesta_cliente) { double }
 
     before :each do
@@ -21,15 +21,15 @@ describe FmTimbradoCfdi::FmRespuesta do
   end
 
   context 'respuesta correcta' do
-    let(:texto_respuesta){File.open('spec/fixtures/soap_response.txt').read}
+    let(:texto_respuesta) { File.open('spec/fixtures/soap_response.txt').read }
     let(:respuesta) { FmTimbradoCfdi::FmRespuesta.new(texto_respuesta) }
     it { expect(respuesta.valid?).to eq(true) }
   end
 
-  context "respuesta sin xml" do
-    let(:texto_respuesta){File.open('spec/fixtures/soap_response_sin_xml.txt').read}
+  context 'respuesta sin xml' do
+    let(:texto_respuesta) { File.open('spec/fixtures/soap_response_sin_xml.txt').read }
     let(:respuesta) { FmTimbradoCfdi::FmRespuesta.new(texto_respuesta) }
     it { expect(respuesta.valid?).to eq(false) }
-    it { expect(respuesta.errors.first).to eq("No se ha encontrado el nodo xml") }
+    it { expect(respuesta.errors.first).to eq('No se ha encontrado el nodo xml') }
   end
 end
