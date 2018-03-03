@@ -2,144 +2,194 @@
 require 'spec_helper'
 
 describe FmTimbradoCfdi do
-  describe ".cliente" do
-    it "Por default el cliente debe cargar la configuración del ambiente de pruebas" do
-      FmTimbradoCfdi.cliente.user_id.should == 'UsuarioPruebasWS'
-      FmTimbradoCfdi.cliente.user_pass.should == 'b9ec2afa3361a59af4b4d102d3f704eabdf097d4'
-      FmTimbradoCfdi.cliente.namespace.should == 'https://t2demo.facturacionmoderna.com/timbrado/soap'
-      FmTimbradoCfdi.cliente.endpoint.should == 'https://t2demo.facturacionmoderna.com/timbrado/soap'
-      FmTimbradoCfdi.cliente.fm_wsdl.should == 'https://t2demo.facturacionmoderna.com/timbrado/wsdl'
+  describe '.cliente' do
+    let(:user_id) { 'UsuarioPruebasWS' }
+    let(:user_pass) { 'b9ec2afa3361a59af4b4d102d3f704eabdf097d4' }
+    let(:namespace) { 'https://t2demo.facturacionmoderna.com/timbrado/soap' }
+    let(:endpoint) { 'https://t2demo.facturacionmoderna.com/timbrado/soap' }
+    let(:fm_wsdl) { 'https://t2demo.facturacionmoderna.com/timbrado/wsdl' }
+
+    it 'Por default carga la configuración del ambiente de pruebas' do
+      expect(FmTimbradoCfdi.cliente.user_id).to eq user_id
+      expect(FmTimbradoCfdi.cliente.user_pass).to eq user_pass
+      expect(FmTimbradoCfdi.cliente.namespace).to eq namespace
+      expect(FmTimbradoCfdi.cliente.endpoint).to eq endpoint
+      expect(FmTimbradoCfdi.cliente.fm_wsdl).to eq fm_wsdl
     end
   end
 
-
-  describe ".timbra_cfdi_layout" do
-    context "timbrado correcto" do
+  describe '.timbra_cfdi_layout' do
+    context 'timbrado correcto' do
       context 'archivo de prueba simple' do
-        let(:plantilla){File.open('spec/fixtures/layout_example.txt').read}
-        let(:layout){ plantilla.gsub('--fecha-comprobante--', 'asignarFecha' )}
-        let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout }
-        it { respuesta.should be_valid }
-        it { respuesta.should be_xml }
-
-        context "formato cbb" do
-          let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout, true}
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_cbb }
+        let(:plantilla) { File.open('spec/fixtures/layout_example.txt').read }
+        let(:layout) { plantilla.gsub('--fecha-comprobante--', 'asignarFecha') }
+        let(:respuesta) do
+          FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout
         end
-     end
-    end
+        it { expect(respuesta).to be_valid }
+        it { expect(respuesta).to be_xml }
 
-    context 'archivo de constructoras' do
-      let(:plantilla){File.open('spec/fixtures/constructora_layout_example.txt').read}
-      let(:layout){plantilla.gsub('--fecha-comprobante--', 'asignarFecha')}
-      let(:respuesta){ FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout }
-      it { respuesta.should be_valid }
-      it { respuesta.should be_xml }
-    end
-  end
-
-  describe ".timbrar" do
-    context "timbrado correcto" do
-      context 'archivo de prueba simple' do
-        let(:plantilla){File.open('spec/fixtures/layout_example.txt').read}
-        let(:layout){ plantilla.gsub('--fecha-comprobante--', 'asignarFecha' )}
-        let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout }
-        it { respuesta.should be_valid }
-        it { respuesta.should be_xml }
-
-        context "formato cbb" do
-          let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarCBB' => true }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_cbb }
-        end
-
-        context "formato txt" do
-          let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarTXT' => true }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_timbre }
-        end
-
-        context "formato pdf" do
-          let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarPDF' => true }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_pdf }
-        end
-
-        context "formato pdf, pero no cbb, ni txt" do
-          let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarPDF' => true, 'generarCBB' => false, 'generarTXT' => false }
-          it { respuesta.should be_valid }
-          it { respuesta.should be_xml }
-          it { respuesta.should be_pdf }
-          it { respuesta.should_not be_cbb }
+        context 'formato cbb' do
+          let(:respuesta) do
+            FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout, true
+          end
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_cbb }
         end
       end
     end
 
     context 'archivo de constructoras' do
-      let(:plantilla){File.open('spec/fixtures/constructora_layout_example.txt').read}
-      let(:layout){plantilla.gsub('--fecha-comprobante--', 'asignarFecha')}
-      let(:respuesta){ FmTimbradoCfdi.timbrar 'ESI920427886', layout }
-      it { respuesta.should be_valid }
-      it { respuesta.should be_xml }
+      let(:plantilla) do
+        File.open('spec/fixtures/constructora_layout_example.txt').read
+      end
+      let(:layout) { plantilla.gsub('--fecha-comprobante--', 'asignarFecha') }
+      let(:respuesta) { FmTimbradoCfdi.timbra_cfdi_layout 'ESI920427886', layout }
+      it { expect(respuesta).to be_valid }
+      it { expect(respuesta).to be_xml }
+    end
+  end
+
+  describe '.timbrar' do
+    context 'timbrado correcto' do
+      context 'archivo de prueba simple' do
+        let(:plantilla) { File.open('spec/fixtures/layout_example.txt').read }
+        let(:layout) { plantilla.gsub('--fecha-comprobante--', 'asignarFecha') }
+        let(:respuesta) { FmTimbradoCfdi.timbrar 'ESI920427886', layout }
+        it { expect(respuesta).to be_valid }
+        it { expect(respuesta).to be_xml }
+
+        context 'formato cbb' do
+          let(:respuesta) do
+            FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarCBB' => true
+          end
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_cbb }
+        end
+
+        context 'formato txt' do
+          let(:respuesta) do
+            FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarTXT' => true
+          end
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_timbre }
+        end
+
+        context 'formato pdf' do
+          let(:respuesta) do
+            FmTimbradoCfdi.timbrar 'ESI920427886', layout, 'generarPDF' => true
+          end
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_pdf }
+        end
+
+        context 'formato pdf, pero no cbb, ni txt' do
+          let(:respuesta) do
+            FmTimbradoCfdi.timbrar('ESI920427886', layout,
+                                   'generarPDF' => true, 'generarCBB' => false,
+                                   'generarTXT' => false)
+          end
+          it { expect(respuesta).to be_valid }
+          it { expect(respuesta).to be_xml }
+          it { expect(respuesta).to be_pdf }
+          it { expect(respuesta).to_not be_cbb }
+        end
+      end
+    end
+
+    context 'archivo de constructoras' do
+      let(:plantilla) { File.open('spec/fixtures/constructora_layout_example.txt').read }
+      let(:layout) { plantilla.gsub('--fecha-comprobante--', 'asignarFecha') }
+      let(:respuesta) { FmTimbradoCfdi.timbrar 'ESI920427886', layout }
+      it { expect(respuesta).to be_valid }
+      it { expect(respuesta).to be_xml }
     end
   end
 
   context 'timbrado incorrecto' do
-    it "no timbra el comprobante si tiene más de 72 horas de haber sido generado" do
-      fecha_comprobante = Time.now - 120*3600
-      layout = File.open('spec/fixtures/layout_example.txt').read.gsub('--fecha-comprobante--', fecha_comprobante.strftime("%FT%T"))
-      respuesta = FmTimbradoCfdi.timbrar 'ESI920427886', layout
-      respuesta.should_not be_valid
+    context 'cuando comprobante tiene más de 72 horas de haber sido generado' do
+      it 'no lo timbra' do
+        fecha_comprobante = Time.now - 120 * 3600
+        layout = File.open('spec/fixtures/layout_example.txt').read
+                     .gsub('--fecha-comprobante--', fecha_comprobante.strftime('%FT%T'))
+        respuesta = FmTimbradoCfdi.timbrar 'ESI920427886', layout
+        expect(respuesta).to_not be_valid
+      end
     end
   end
 
   context 'subir certificados' do
-    let(:archivo_certificado) { File.read('spec/fixtures/certificados/20001000000200000192.cer') }
-    let(:archivo_llave) { File.read('spec/fixtures/certificados/20001000000200000192.key') }
+    let(:archivo_certificado) do
+      File.read('spec/fixtures/certificados/20001000000200000192.cer')
+    end
+    let(:archivo_llave) do
+      File.read('spec/fixtures/certificados/20001000000200000192.key')
+    end
     let(:password) { '12345678a' }
     describe '.activar_cancelacion' do
       context 'petición válida' do
-        let(:respuesta){ FmTimbradoCfdi.activar_cancelacion('ESI920427886', archivo_certificado, archivo_llave, password) }
+        let(:respuesta) do
+          FmTimbradoCfdi.activar_cancelacion('ESI920427886',
+                                             archivo_certificado,
+                                             archivo_llave,
+                                             password)
+        end
         it{ expect(respuesta.valid?).to eq(true) }
       end
 
       context 'petición inválida' do
-        let(:respuesta){ FmTimbradoCfdi.activar_cancelacion('ESI920427886', archivo_llave, archivo_certificado, password) }
+        let(:respuesta) do
+          FmTimbradoCfdi.activar_cancelacion('ESI920427886',
+                                             archivo_llave,
+                                             archivo_certificado,
+                                             password)
+        end
         it{ expect(respuesta.valid?).to eq(false) }
       end
     end
 
     describe '.subir_certificado' do
       context 'petición válida' do
-        let(:respuesta){ FmTimbradoCfdi.subir_certificado('ESI920427886', archivo_certificado, archivo_llave, password) }
+        let(:respuesta) do
+          FmTimbradoCfdi.subir_certificado('ESI920427886',
+                                           archivo_certificado,
+                                           archivo_llave,
+                                           password)
+        end
         it{ expect(respuesta.valid?).to eq(true) }
       end
 
       context 'petición inválida' do
-        let(:respuesta){ FmTimbradoCfdi.subir_certificado('ESI920427886', archivo_llave, archivo_certificado, password) }
+        let(:respuesta) do
+          FmTimbradoCfdi.subir_certificado('ESI920427886',
+                                           archivo_llave,
+                                           archivo_certificado,
+                                           password)
+        end
         it{ expect(respuesta.valid?).to eq(false) }
       end
     end
-
   end
 
-  describe ".cancelar" do
-    context "petición inválida" do
+  describe '.cancelar' do
+    context 'petición inválida' do
       let(:respuesta){ FmTimbradoCfdi.cancelar('ESI920427886', 'asdasasdsa') }
       it{ expect(respuesta.valid?).to eq(false) }
     end
 
-    context "formato válido" do
-      let(:respuesta){ FmTimbradoCfdi.cancelar('ESI920427886', '00000000-0000-0000-0000-00000000000000') }
+    context 'formato válido' do
+      let(:respuesta) do
+        FmTimbradoCfdi.cancelar('ESI920427886',
+                                '00000000-0000-0000-0000-00000000000000')
+      end
       it{ expect(respuesta.valid?).to eq(false) }
     end
 
-    context "peticion válida" do
+    context 'peticion válida' do
       let(:uuid) do
         plantilla = File.open('spec/fixtures/layout_example.txt').read
         layout = plantilla.gsub('--fecha-comprobante--', 'asignarFecha' )
@@ -151,24 +201,21 @@ describe FmTimbradoCfdi do
     end
   end
 
-  describe ".configurar" do
-    it "cambia los valores de conexión por los proporcionados" do
+  describe '.configurar' do
+    it 'cambia los valores de conexión por los proporcionados' do
       FmTimbradoCfdi.configurar do |config|
-        config.user_id = "mi_usuario"
-        config.user_pass = "secret"
-        config.namespace = "http://logicalbricks.com/soap"
-        config.endpoint = "http://logicalbricks.com/endpoint"
-        config.fm_wsdl = "http://logicalbricks.com/wsdl"
+        config.user_id = 'mi_usuario'
+        config.user_pass = 'secret'
+        config.namespace = 'http://logicalbricks.com/soap'
+        config.endpoint = 'http://logicalbricks.com/endpoint'
+        config.fm_wsdl = 'http://logicalbricks.com/wsdl'
       end
 
-      FmTimbradoCfdi.cliente.user_id.should == 'mi_usuario'
-      FmTimbradoCfdi.cliente.user_pass.should == 'secret'
-      FmTimbradoCfdi.cliente.namespace.should == 'http://logicalbricks.com/soap'
-      FmTimbradoCfdi.cliente.endpoint.should == 'http://logicalbricks.com/endpoint'
-      FmTimbradoCfdi.cliente.fm_wsdl.should == 'http://logicalbricks.com/wsdl'
+      expect(FmTimbradoCfdi.cliente.user_id).to eq 'mi_usuario'
+      expect(FmTimbradoCfdi.cliente.user_pass).to eq 'secret'
+      expect(FmTimbradoCfdi.cliente.namespace).to eq 'http://logicalbricks.com/soap'
+      expect(FmTimbradoCfdi.cliente.endpoint).to eq 'http://logicalbricks.com/endpoint'
+      expect(FmTimbradoCfdi.cliente.fm_wsdl).to eq 'http://logicalbricks.com/wsdl'
     end
   end
-
 end
-
-

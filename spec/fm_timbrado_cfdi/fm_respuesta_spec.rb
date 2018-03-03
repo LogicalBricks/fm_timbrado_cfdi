@@ -1,16 +1,16 @@
 # encoding: utf-8
 require 'spec_helper'
-require 'ostruct'
 
 describe FmTimbradoCfdi::FmRespuesta do
-  context "respuesta no satisfactoria" do
-    let(:respuesta_cliente) do
-      prueba = OpenStruct.new
-      prueba.stub(:success?).and_return(false)
-      prueba.stub_chain(:soap_fault?).and_return(true)
-      prueba.stub_chain(:soap_fault, :to_s).and_return('Test Error')
-      prueba
+  context 'respuesta no satisfactoria' do
+    let(:respuesta_cliente) { double }
+
+    before :each do
+      allow(respuesta_cliente).to receive(:success?).and_return false
+      allow(respuesta_cliente).to receive(:soap_fault?).and_return true
+      allow(respuesta_cliente).to receive_message_chain(:soap_fault, :to_s).and_return 'Test Error'
     end
+
     let(:respuesta) { FmTimbradoCfdi::FmRespuesta.new(respuesta_cliente) }
     it { expect(respuesta.valid?).to eq(false) }
     it { expect(respuesta.xml?).to eq(false) }
@@ -21,15 +21,15 @@ describe FmTimbradoCfdi::FmRespuesta do
   end
 
   context 'respuesta correcta' do
-    let(:texto_respuesta){File.open('spec/fixtures/soap_response.txt').read}
+    let(:texto_respuesta) { File.open('spec/fixtures/soap_response.txt').read }
     let(:respuesta) { FmTimbradoCfdi::FmRespuesta.new(texto_respuesta) }
     it { expect(respuesta.valid?).to eq(true) }
   end
 
-  context "respuesta sin xml" do
-    let(:texto_respuesta){File.open('spec/fixtures/soap_response_sin_xml.txt').read}
+  context 'respuesta sin xml' do
+    let(:texto_respuesta) { File.open('spec/fixtures/soap_response_sin_xml.txt').read }
     let(:respuesta) { FmTimbradoCfdi::FmRespuesta.new(texto_respuesta) }
     it { expect(respuesta.valid?).to eq(false) }
-    it { expect(respuesta.errors.first).to eq("No se ha encontrado el nodo xml") }
+    it { expect(respuesta.errors.first).to eq('No se ha encontrado el nodo xml') }
   end
 end

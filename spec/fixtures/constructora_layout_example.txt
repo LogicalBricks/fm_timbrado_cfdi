@@ -1,108 +1,85 @@
-[Encabezado]
+[ComprobanteFiscalDigital]
 
-serie|
-fecha|--fecha-comprobante--
-folio|
-tipoDeComprobante|egreso
-formaDePago|PAGO EN UNA SOLA EXHIBICIÓN
-metodoDePago|Transferencía Electrónica
-condicionesDePago|Contado
-NumCtaPago|0098-HSBC
-subTotal|862068.97
-descuento|0.00
-total|735344.84
-Moneda|MXN
-noCertificado|
-LugarExpedicion|Nuevo León, México.
+; Nota: Los comentarios empiezan con ;
+; Elaboró: Facturación Moderna
+; Contacto: wsoporte@facturacionmoderna.com
 
-[Datos Adicionales]
-
-tipoDocumento|Factura
-numeropedido|
-observaciones|Efectos Fiscales al Pago
-
-[Emisor]
-
-rfc|ESI920427886
-nombre|EMPRESA DE MUESTRA S.A de C.V.
-RegimenFiscal|REGIMEN GENERAL DE LEY
-
-[DomicilioFiscal]
-
-calle|Calle
-noExterior|Número Ext.
-noInterior|Número Int.
-colonia|Colonia
-localidad|Localidad
-municipio|Municipio
-estado|NUEVO LEON
-pais|México
-codigoPostal|66260
-
-[ExpedidoEn]
-calle|Calle sucursal
-noExterior|
-noInterior|
-colonia|
-localidad|
-municipio|Nuevo León
-estado|Nuevo León
-pais|México
-codigoPostal|77000
-
-[Receptor]
-rfc|GHR090615KH8
-nombre|GOBIERNO DEL EDO DE OAXACA
-
-[Domicilio]
-calle|AVE BATALLON DE SAN PATRICIO
-noExterior|1000
-noInterior|1000
-colonia|RESIDENCIAL SAN AGUSTIN
-localidad|SAN PEDRO GARZA GARCIA
-municipio|
-estado|NUEVO LEON
-pais|MEXICO
-codigoPostal|66260
+Version=3.3
+Serie=A
+Folio=03
+Fecha=--fecha-comprobante--
+FormaPago=03
+NoCertificado=20001000000300022815
+CondicionesDePago=CONTADO
+SubTotal=2880.00
+Descuento=
+Moneda=MXN
+Total=3390.30
+TipoDeComprobante=I
+MetodoPago=PUE
+LugarExpedicion=68050
 
 [DatosAdicionales]
+tipoDocumento=FACTURA
+observaciones=Observaciones al documento versión 3.3
+plantillaPDF=clasic
 
-noCliente|09871
-email|edgar.duran@facturacionmoderna.com
+[Emisor]
+Rfc=LAN7008173R5
+Nombre=FACTURACION MODERNA SA DE CV
+RegimenFiscal=601
 
+[Receptor]
+Rfc=XAXX010101000
+Nombre=PUBLICO EN GENERAL
+UsoCFDI=G01
 
-[Concepto]
+[Concepto#1]
+ClaveProdServ=90111800
+NoIdentificacion=HOSP
+Cantidad=3
+ClaveUnidad=DAY
+Unidad=día
+Descripcion=Hospedaje de habitación sencilla
+ValorUnitario=550.00
+Importe=1650.00
+Descuento=
 
-cantidad|1
-unidad|No aplica
-noIdentificacion|
-descripcion|RECIBI DE LA TESORERIA MUNICIPAL DEL H. AYUNTAMIENTO DE SANTA MARIA OZOLOTEPEC, MIAHUATLAN, OAXACA, CON CARGO A LOS RECURSOS DEL RAMO GENERAL 33, ESPECIFICAMENTE DEL FONDO III.- FONDO PARA LA INFRAESTRUCTURA SOCIAL MUNICIPAL, EJERCICIO PRESUPUESTAL 2012, LA CANTIDAD DE $ 551,000.00 (QUINIENTOS CINCUENTA Y UN MIL PESOS 00/100 M.N.) POR CONCEPTO DEL PAGO DE LA ESTIMACION NUMERO UNO, RELATIVO A LA OBRA: CONSTRUCCION DEL SISTEMA DE AGUA POTABLE 2a. ETAPA, UBICADA EN LA LOCALIDAD DE SAN PABLO, MUNICIPIO DE SANTA MARIA OZOLOTEPEC, DISTRITO DE MIAHUATLAN, REGION DE LA SIERRA SUR, ESTADO DE OAXACA, SEGUN CONTRATO DE OBRA PUBLICA A PRECIOS UNITARIOS Y TIEMPO DETERMINADO No. MSM/AD/FISM/424-013/2012 DE FECHA: 01 DE MARZO DEL DOS MIL DOCE Y SEGUN OFICIO DE NOTIFICACION DE APROBACION Y AUTORIZACION DE OBRA NUM. R33/FISM/424/013/20012 DE FECHA: DIECINUEVE DE FEBRERO DEL DOS MIL DOCE, CORRESPONDIENTE A LA CUENTA AGUA POTABLE, TENIENDO UN PERIODO DE EJECUCION DE ACUERDO AL CONTRATO DEL 02 DE MARZO DEL 2012 AL 30 DE ABRIL DEL 2012, CON PERIODO DE EJECUCION DE LOS TRABAJOS DE LA PRESENTE ESTIMACION DEL 02 DE MARZO DEL 2012 AL 31 DE MARZO DEL 2012.
-valorUnitario|862068.97
-importe|862068.97
+Impuestos.Traslados.Base=[1650.00]
+Impuestos.Traslados.Impuesto=[002]
+Impuestos.Traslados.TipoFactor=[Tasa]
+Impuestos.Traslados.TasaOCuota=[0.160000]
+Impuestos.Traslados.Importe=[264.00]
 
+[Concepto#2]
+ClaveProdServ=90101700
+NoIdentificacion=
+Cantidad=1
+ClaveUnidad=A9
+Unidad=
+Descripcion=Servicio a habitación
+ValorUnitario=1230.00
+Importe=1230.00
 
+Impuestos.Traslados.Base=[1230.00]
+Impuestos.Traslados.Impuesto=[002]
+Impuestos.Traslados.TipoFactor=[Tasa]
+Impuestos.Traslados.TasaOCuota=[0.160000]
+Impuestos.Traslados.Importe=[196.80]
 
-[ImpuestoTrasladado]
+[Traslados]
+TotalImpuestosTrasladados=460.80
+Impuesto=[002]
+TipoFactor=[Tasa]
+TasaOCuota=[0.160000]
+Importe=[460.80]
 
-impuesto|IVA
-importe|137931.04
-tasa|16.00
+[TrasladosLocales]
+ImpLocTrasladado=[ISH]
+TasadeTraslado=[3.00]
+Importe=[49.50]
 
-
-
-[RetencionLocal]
-ImpLocRetenido|Amortización de anticipo
-TasadeRetencion|30
-Importe|258620.69
-
-[RetencionLocal]
-ImpLocRetenido|Inspección y Vigilancia
-TasadeRetencion|0.5
-Importe|4310.34
-
-[RetencionLocal]
-ImpLocRetenido|Retención 2 al millar
-TasadeRetencion|0.2
-Importe|1724.14
-
-
+;[RetencionesLocales]
+;ImpLocRetenido=[Amortización Anticipo, Inspección y Vigilancia]
+;TasadeRetencion=[30,0.5]
+;Importe=[258620.69,4310.34]

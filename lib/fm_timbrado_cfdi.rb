@@ -1,6 +1,7 @@
-require "fm_timbrado_cfdi/version"
-require "fm_timbrado_cfdi/fm_cliente"
-require "fm_timbrado_cfdi/fm_informacion_cfdi"
+require 'fm_timbrado_cfdi/version'
+require 'fm_timbrado_cfdi/fm_cliente'
+require 'fm_timbrado_cfdi/fm_informacion_cfdi'
+require 'fm_timbrado_cfdi/fm_cfdi'
 require 'nokogiri'
 require 'base64'
 
@@ -24,7 +25,7 @@ module FmTimbradoCfdi
   def timbra_cfdi_xml (xml, generar_cbb = false)
     factura_xml = Nokogiri::XML(xml)
     #procesar rfc del emisor
-    emisor = factura_xml.xpath("//cfdi:Emisor")
+    emisor = factura_xml.xpath('//cfdi:Emisor')
     rfc = emisor[0]['rfc']
     cliente.timbrar rfc, factura_xml.to_s, 'generarCBB' => generar_cbb
   end
