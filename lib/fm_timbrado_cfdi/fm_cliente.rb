@@ -1,6 +1,7 @@
 require 'savon'
 require 'fm_timbrado_cfdi/fm_respuesta'
 require 'fm_timbrado_cfdi/fm_respuesta_cancelacion'
+require 'fm_timbrado_cfdi/fm_respuesta_consultar_estado'
 
 module FmTimbradoCfdi
   class FmCliente
@@ -12,7 +13,7 @@ module FmTimbradoCfdi
       # Datos de acceso al webservice
       @user_id = 'UsuarioPruebasWS'
       @user_pass = 'b9ec2afa3361a59af4b4d102d3f704eabdf097d4'
-      # Datos del webservise de prueba
+      # Datos del web service de prueba
       @namespace = 'https://t2demo.facturacionmoderna.com/timbrado/soap'
       @endpoint = 'https://t2demo.facturacionmoderna.com/timbrado/soap'
       @fm_wsdl = 'https://t2demo.facturacionmoderna.com/timbrado/wsdl'
@@ -42,6 +43,16 @@ module FmTimbradoCfdi
     def cancelar(rfc, uuid, opciones = {})
       respuesta = webservice_call(:request_cancelar_cfdi, rfc, {uuid: uuid}.merge(opciones))
       FmRespuestaCancelacion.new(respuesta)
+    end
+
+    def consultar_estado(rfc_emisor, rfc_receptor, monto, uuid)
+      opciones = {
+        receptorRFC: rfc_receptor,
+        total: monto,
+        "UUID" => uuid
+      }
+      respuesta = webservice_call(:consultar_estatus_cfdi, rfc_emisor, opciones)
+      FmRespuestaConsultarEstado.new(respuesta)
     end
 
     private

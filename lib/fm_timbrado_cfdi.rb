@@ -75,4 +75,7 @@ module FmTimbradoCfdi
     cliente.cancelar(rfc, uuid)
   end
 
+  def consultar_estado(rfc_emisor, rfc_origen, monto, uuid)
+    cliente.consultar_estado(rfc_emisor, rfc_origen, monto, uuid)
+  end
 end

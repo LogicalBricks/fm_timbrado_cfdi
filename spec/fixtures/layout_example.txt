@@ -19,8 +19,8 @@ observaciones=Observaciones al documento versión 3.3
 platillaPDF=clasic
 
 [Emisor]
-Rfc=ESI920427886
-Nombre=FACTURACION MODERNA SA DE CV
+Rfc=LAN7008173R5
+Nombre=CINDEMEX SA DE CV
 RegimenFiscal=601
 
 [Receptor]

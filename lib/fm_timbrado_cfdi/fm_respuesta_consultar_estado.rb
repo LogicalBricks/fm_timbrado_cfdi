@@ -1,10 +1,10 @@
 # -*- encoding : utf-8 -*-
 require 'nokogiri'
 require 'savon'
-require 'fm_timbrado_cfdi/fm_respuesta_cancelacion_parser'
+require 'fm_timbrado_cfdi/fm_respuesta_consultar_estado_parser'
 
 module FmTimbradoCfdi
-  class FmRespuestaCancelacion
+  class FmRespuestaConsultarEstado
     attr_reader :xml
 
     def initialize(savon_response)
@@ -21,12 +21,20 @@ module FmTimbradoCfdi
       @parsed_response.mensaje_error
     end
 
-    def codigo
-      @parsed_response.codigo
+    def http_code
+      @parsed_response.http_code
     end
 
-    def mensaje
-      @parsed_response.mensaje
+    def estado
+      @parsed_response.estado
+    end
+
+    def es_cancelable
+      @parsed_response.es_cancelable
+    end
+
+    def estatus_cancelacion
+      @parsed_response.estatus_cancelacion
     end
 
     def valid?
@@ -36,7 +44,7 @@ module FmTimbradoCfdi
     private
 
     def parsear_respuesta
-      FmTimbradoCfdi::FmRespuestaCancelacionParser.new(xml)
+      FmTimbradoCfdi::FmRespuestaConsultarEstadoParser.new(xml)
     end
   end
 end
